@@ -5,7 +5,11 @@ import Autoplay from "embla-carousel-autoplay";
 import { useCallback, useEffect, useState } from "react";
 import Button from "./Button";
 
-const slides = ["/banner1.jpeg", "/banner2.jpeg", "/banner3.jpeg"];
+const slides = [
+  { src: "/banner1.jpeg", tag: "Learn, Recite, Understand" },
+  { src: "/banner2.jpeg", tag: "A simple way to understand The Quran" },
+  { src: "/banner3.jpeg", tag: "Learn The Quran Easily, Step by Step" },
+];
 
 export default function Banner() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [Autoplay({ delay: 5000 })]);
@@ -23,13 +27,12 @@ export default function Banner() {
       {/* Carousel track */}
       <div ref={emblaRef} className="absolute inset-0">
         <div className="flex h-full">
-          {slides.map((src, i) => (
+          {slides.map(({ src, tag }, i) => (
             <div key={i} className="relative flex-[0_0_100%] h-full min-h-[90vh]">
               <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                 style={{ backgroundImage: `url('${src}')` }}
               />
-              {/* Green shade overlay */}
               <div
                 className="absolute inset-0"
                 style={{
@@ -37,6 +40,12 @@ export default function Banner() {
                     "linear-gradient(to right, rgba(0,40,10,0.82) 0%, rgba(0,60,20,0.55) 55%, rgba(0,30,10,0.35) 100%)",
                 }}
               />
+              {/* Per-slide tag */}
+              <div className="absolute top-100 left-1/2 -translate-x-1/2 z-10 text-center">
+                <span className="text-white/70 text-sm md:text-base tracking-widest uppercase border border-white/20 px-5 py-2 rounded-full backdrop-blur-sm">
+                  {tag}
+                </span>
+              </div>
             </div>
           ))}
         </div>
@@ -50,10 +59,10 @@ export default function Banner() {
 
       {/* Content */}
       <div className="relative z-20 flex items-center justify-center min-h-[90vh]">
-        <div className="text-center px-4 max-w-3xl mx-auto">
+        <div className="text-center px-4 mx-auto">
           <div
-            className="text-4xl md:text-5xl text-white mb-6 opacity-0 animate-fade-in"
-            style={{ fontFamily: "Georgia, serif", animationDelay: "0.1s", animationFillMode: "forwards" }}
+            className="arabic text-4xl md:text-5xl text-white mb-6 opacity-0 animate-fade-in"
+            style={{ animationDelay: "0.1s", animationFillMode: "forwards" }}
             aria-label="Bismillah ir-Rahman ir-Rahim"
           >
             بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ
@@ -74,20 +83,13 @@ export default function Banner() {
             <span className="gold-shimmer-text">Classes</span>
           </h1>
 
-          <p
-            className="text-base md:text-lg text-gray-300 max-w-xl mx-auto mb-10 leading-relaxed opacity-0 animate-fade-in-up delay-600"
-            style={{ animationFillMode: "forwards" }}
-          >
-            When things are too hard to handle, retreat &amp; count your blessings instead
-          </p>
-
-          <div className="opacity-0 animate-fade-in-up delay-800" style={{ animationFillMode: "forwards" }}>
+          <div className="mt-40 opacity-0 animate-fade-in-up delay-400" style={{ animationFillMode: "forwards" }}>
             <Button
               variant="outline"
               size="lg"
               href="/contact"
               icon={
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
               }
@@ -105,11 +107,10 @@ export default function Banner() {
             key={i}
             onClick={() => scrollTo(i)}
             aria-label={`Slide ${i + 1}`}
-            className={`rounded-full transition-all duration-300 ${
-              i === current
+            className={`rounded-full transition-all duration-300 ${i === current
                 ? "w-8 h-3 bg-[var(--color-gold)]"
                 : "w-3 h-3 bg-white/40 hover:bg-white/70"
-            }`}
+              }`}
           />
         ))}
       </div>

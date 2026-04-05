@@ -94,21 +94,15 @@ export default function WhyChooseUs() {
           </p>
         </div>
 
-        {/* Image gallery strip */}
-        <div className="grid grid-cols-3 gap-4 mb-14">
-          {["/banner1.jpeg", "/banner2.jpeg", "/banner3.jpeg"].map((src, i) => (
-            <div key={i} className="relative h-52 rounded-2xl overflow-hidden group">
-              <img
-                src={src}
-                alt={`Academy image ${i + 1}`}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              {/* green tint overlay */}
-              <div className="absolute inset-0 bg-[var(--color-gold)]/20 group-hover:bg-[var(--color-gold)]/10 transition-colors duration-300" />
-              {/* bottom fade */}
-              <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/60 to-transparent" />
-            </div>
-          ))}
+        {/* Section image */}
+        <div className="relative h-72 rounded-2xl overflow-hidden mb-14">
+          <img
+            src="/whyChooseUs.jpeg"
+            alt="Why Choose Al Burhan Quran Academy"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-[var(--color-gold)]/10" />
+          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/70 to-transparent" />
         </div>
 
         {/* Two-column layout: description left, features right */}

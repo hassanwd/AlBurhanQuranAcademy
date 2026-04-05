@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'AlMajeedQuranic';
+  src: url('/fonts/Al Majeed Quranic Font_shiped.ttf') format('truetype');
+  font-display: swap;
+}
+
+.arabic {
+  font-family: 'AlMajeedQuranic', serif;
+  direction: rtl;
+}
+
 @theme {
   --color-gold: #2e7d32;
   --color-gold-light: #43a047;
