@@ -37,7 +37,7 @@ export default function Banner() {
                 className="absolute inset-0"
                 style={{
                   background:
-                    "linear-gradient(to right, rgba(0,40,10,0.82) 0%, rgba(0,60,20,0.55) 55%, rgba(0,30,10,0.35) 100%)",
+                    "linear-gradient(to right, rgba(80,20,0,0.85) 0%, rgba(120,40,0,0.55) 55%, rgba(60,15,0,0.35) 100%)",
                 }}
               />
               {/* Per-slide tag */}
@@ -69,7 +69,7 @@ export default function Banner() {
           </div>
 
           <p
-            className="text-base md:text-lg text-[var(--color-gold-light)] tracking-[0.25em] uppercase mb-3 opacity-0 animate-fade-in-up delay-200"
+            className="text-base md:text-lg text-[var(--color-sky)] tracking-[0.25em] uppercase mb-3 opacity-0 animate-fade-in-up delay-200"
             style={{ animationFillMode: "forwards" }}
           >
             Al Burhan Quran Academy
@@ -108,7 +108,7 @@ export default function Banner() {
             onClick={() => scrollTo(i)}
             aria-label={`Slide ${i + 1}`}
             className={`rounded-full transition-all duration-300 ${i === current
-                ? "w-8 h-3 bg-[var(--color-gold)]"
+                ? "w-8 h-3 bg-[var(--color-accent)]"
                 : "w-3 h-3 bg-white/40 hover:bg-white/70"
               }`}
           />

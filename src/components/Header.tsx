@@ -12,12 +12,12 @@ export default function Header() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <img src="/logo.jpeg" alt="Al Burhan Quran Academy Logo" className="w-12 h-12 rounded-full object-cover" />
+            <img src="/png-logo.png" alt="Al Burhan Quran Academy Logo" className="w-25 h-25 rounded-full object-cover" />
             <div>
               <div className="text-lg font-black tracking-tight leading-none">
                 <span className="text-white">Al </span>
                 <span className="text-white">Burhan </span>
-                <span className="text-[var(--color-gold)]">Quran </span>
+                <span className="text-[var(--color-accent)]">Quran </span>
                 <span className="text-white">Academy</span>
               </div>
             </div>

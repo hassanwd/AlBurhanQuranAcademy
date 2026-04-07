@@ -23,21 +23,21 @@ export default function Button({
   icon,
 }: ButtonProps) {
   const base =
-    "inline-flex items-center gap-2 font-semibold tracking-wider uppercase transition-all duration-300 cursor-pointer select-none";
+    "inline-flex items-center gap-2 font-semibold tracking-wide rounded-sm transition-all duration-300 cursor-pointer select-none";
 
   const sizes: Record<ButtonSize, string> = {
-    sm: "px-4 py-2 text-xs",
-    md: "px-8 py-3 text-sm",
-    lg: "px-10 py-4 text-base",
+    sm: "px-5 py-2 text-xs",
+    md: "px-7 py-2.5 text-sm",
+    lg: "px-9 py-3.5 text-sm",
   };
 
   const variants: Record<ButtonVariant, string> = {
     primary:
-      "bg-[var(--color-gold)] text-black hover:bg-[var(--color-gold-light)] shadow-[0_0_20px_rgba(201,168,76,0.4)] hover:shadow-[0_0_35px_rgba(201,168,76,0.7)]",
+      "bg-[var(--color-green-mid)] text-white hover:bg-[var(--color-green-light)] shadow-[0_4px_20px_rgba(27,94,32,0.35)] hover:shadow-[0_4px_28px_rgba(27,94,32,0.55)]",
     outline:
-      "border-2 border-[var(--color-gold)] text-[var(--color-gold)] hover:bg-[var(--color-gold)] hover:text-black",
+      "bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] shadow-[0_4px_20px_rgba(191,69,0,0.35)] hover:shadow-[0_4px_28px_rgba(191,69,0,0.55)]",
     ghost:
-      "text-[var(--color-gold)] underline underline-offset-4 hover:text-[var(--color-gold-light)]",
+      "text-[var(--color-accent-light)] hover:text-white underline underline-offset-4",
   };
 
   const classes = `${base} ${sizes[size]} ${variants[variant]} ${className}`;

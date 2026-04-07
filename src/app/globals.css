@@ -12,15 +12,40 @@
 }
 
 @theme {
-  --color-gold: #2e7d32;
-  --color-gold-light: #43a047;
-  --color-gold-dark: #1b5e20;
-  --color-gold-muted: #2e7d3233;
-  --color-black: #0a0a0a;
-  --color-black-soft: #111111;
-  --color-black-nav: #1a1a1a;
+  /* Green — deep forest green from logo */
+  --color-green: #1b5e20;
+  --color-green-mid: #2e7d32;
+  --color-green-light: #388e3c;
+  --color-green-muted: #1b5e2028;
+
+  /* Keeping --color-gold aliases for backward compat */
+  --color-gold: #1b5e20;
+  --color-gold-light: #2e7d32;
+  --color-gold-dark: #0a3d0e;
+  --color-gold-muted: #1b5e2028;
+
+  /* Orange — rich burnt orange from logo text */
+  --color-accent: #bf4500;
+  --color-accent-light: #e05a00;
+  --color-accent-hover: #d44f00;
+  --color-accent-muted: #bf450018;
+
+  /* Sky blue — from logo accent */
+  --color-sky: #0288d1;
+  --color-sky-light: #29b6f6;
+  --color-sky-muted: #0288d118;
+
+  /* Backgrounds */
+  --color-black: #0d0d0d;
+  --color-black-soft: #141414;
+  --color-black-nav: #111111;
+  --color-surface: #1a1a1a;
+  --color-surface-raised: #202020;
+  --color-border: #2a2a2a;
+
   --color-white: #ffffff;
-  --color-gray-muted: #cccccc;
+  --color-gray-muted: #9ca3af;
+  --color-gray-dim: #6b7280;
 
   --font-display: "Cinzel", serif;
   --font-body: "Lato", sans-serif;
@@ -31,6 +56,7 @@ body {
   background-color: var(--color-black);
   color: var(--color-white);
   font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Smooth scroll */
@@ -68,15 +94,15 @@ html {
 .gold-shimmer-text {
   background: linear-gradient(
     90deg,
-    var(--color-gold-dark) 0%,
-    var(--color-gold-light) 40%,
-    #a5d6a7 50%,
-    var(--color-gold-light) 60%,
-    var(--color-gold-dark) 100%
+    #bf4500 0%,
+    #e05a00 35%,
+    #f4a261 50%,
+    #e05a00 65%,
+    #bf4500 100%
   );
-  background-size: 200% auto;
+  background-size: 250% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: shimmer 4s linear infinite;
+  animation: shimmer 5s ease-in-out infinite;
 }
