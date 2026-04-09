@@ -63,16 +63,30 @@ export default function WhyChooseUs() {
             {/* Description */}
             <div className="space-y-4 text-gray-300 text-base leading-relaxed max-w-3xl">
               <p>
+                AL Burhan Quran Academy is committed to providing quality Quran education to Muslims around the
+                world. Our mission is to help students develop a strong connection with the Holy Quran and understand the
+                true teachings of Islam in a simple and effective way.
+              </p>
+              <p>
                 At AL Burhan Quran Academy, we follow a structured and step-by-step learning approach that enables
-                students of all ages to learn the Quran correctly with proper Tajweed.
+                students of all ages to learn the Quran correctly with proper Tajweed. Our goal is not only to teach Quran
+                recitation but also to help students build confidence and consistency in their learning journey.
               </p>
               <p>
-                Our online learning system allows students to take Quran classes from the comfort of their homes.
-                With flexible scheduling, you can choose timings that fit your daily routine.
+                Our online learning system allows students to take Quran classes from the comfort of their homes. With
+                flexible scheduling, you can easily choose class timings that fit your daily routine. Whether you are at home
+                or traveling with your family, our online platform keeps you connected with your Quran lessons without
+                interruption.
               </p>
               <p>
-                Our qualified teachers guide every student with patience and care, maintaining punctuality in
-                every class for a smooth and reliable learning experience.
+                Our qualified and experienced Quran teachers are dedicated to guiding every student with patience and
+                care. They understand the importance of time and maintain punctuality in every class to ensure a smooth
+                and reliable learning experience.
+              </p>
+              <p>
+                By joining AL Burhan Quran Academy, students receive personal attention, structured guidance, and a
+                supportive learning environment that helps them improve their Quran recitation and understanding. With
+                regular practice and expert guidance, students can soon read the Holy Quran with confidence and fluency.
               </p>
             </div>
 
@@ -85,16 +99,6 @@ export default function WhyChooseUs() {
                 </li>
               ))}
             </ul>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-4 max-w-lg">
-              {([["500+", "Students"], ["50+", "Teachers"], ["10+", "Courses"]] as const).map(([num, label]) => (
-                <div key={label} className="text-center py-4 rounded-xl border border-[var(--color-sky)]/25 bg-[var(--color-sky)]/10">
-                  <div className="text-3xl font-black text-[var(--color-sky)]">{num}</div>
-                  <div className="text-xs text-gray-400 uppercase tracking-widest mt-1">{label}</div>
-                </div>
-              ))}
-            </div>
 
           </div>
         </div>

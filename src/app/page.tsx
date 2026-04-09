@@ -1,6 +1,7 @@
 import Banner from "@/components/Banner";
 import HadeesSection from "@/components/HadeesSection";
 import Header from "@/components/Header";
+import StatsSection from "@/components/StatsSection";
 import WhyChooseUs from "@/components/WhyChooseUs";
 
 export default function Home() {
@@ -8,6 +9,7 @@ export default function Home() {
     <main>
       <Header />
       <Banner />
+      <StatsSection />
       <WhyChooseUs />
       <HadeesSection />
     </main>

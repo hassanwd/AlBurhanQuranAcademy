@@ -27,35 +27,19 @@ export default function Banner() {
       {/* Carousel track */}
       <div ref={emblaRef} className="absolute inset-0">
         <div className="flex h-full">
-          {slides.map(({ src, tag }, i) => (
+          {slides.map(({ src }, i) => (
             <div key={i} className="relative flex-[0_0_100%] h-full min-h-[90vh]">
               <div
                 className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                 style={{ backgroundImage: `url('${src}')` }}
               />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(to right, rgba(80,20,0,0.85) 0%, rgba(120,40,0,0.55) 55%, rgba(60,15,0,0.35) 100%)",
-                }}
-              />
-              {/* Per-slide tag */}
-              <div className="absolute top-100 left-1/2 -translate-x-1/2 z-10 text-center">
-                <span className="text-white/70 text-sm md:text-base tracking-widest uppercase border border-white/20 px-5 py-2 rounded-full backdrop-blur-sm">
-                  {tag}
-                </span>
-              </div>
+              {/* Subtle dark overlay */}
+              <div className="absolute inset-0 bg-black/40" />
+
             </div>
           ))}
         </div>
       </div>
-
-      {/* Bottom vignette */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-10"
-        style={{ background: "linear-gradient(to top, rgba(5,20,5,0.85) 0%, transparent 100%)" }}
-      />
 
       {/* Content */}
       <div className="relative z-20 flex items-center justify-center min-h-[90vh]">
@@ -83,7 +67,14 @@ export default function Banner() {
             <span className="gold-shimmer-text">Classes</span>
           </h1>
 
-          <div className="mt-40 opacity-0 animate-fade-in-up delay-400" style={{ animationFillMode: "forwards" }}>
+          {/* Per-slide tag shown here responsively */}
+          <div className="opacity-0 animate-fade-in-up delay-400" style={{ animationFillMode: "forwards" }}>
+            <span className="text-white/70 text-xs md:text-sm tracking-widest uppercase border border-white/20 px-4 py-1.5 md:px-5 md:py-2 rounded-full backdrop-blur-sm">
+              {slides[current].tag}
+            </span>
+          </div>
+
+          <div className="mt-8 md:mt-12 opacity-0 animate-fade-in-up delay-400" style={{ animationFillMode: "forwards" }}>
             <Button
               variant="outline"
               size="lg"

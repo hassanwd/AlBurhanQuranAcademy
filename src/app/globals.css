@@ -24,16 +24,16 @@
   --color-gold-dark: #0a3d0e;
   --color-gold-muted: #1b5e2028;
 
-  /* Orange — rich burnt orange from logo text */
-  --color-accent: #bf4500;
-  --color-accent-light: #e05a00;
-  --color-accent-hover: #d44f00;
-  --color-accent-muted: #bf450018;
+  /* Orange */
+  --color-accent: #FA841E;
+  --color-accent-light: #fb9a45;
+  --color-accent-hover: #e8760f;
+  --color-accent-muted: #FA841E18;
 
-  /* Sky blue — from logo accent */
-  --color-sky: #0288d1;
-  --color-sky-light: #29b6f6;
-  --color-sky-muted: #0288d118;
+  /* Teal */
+  --color-sky: #099490;
+  --color-sky-light: #0bb5b0;
+  --color-sky-muted: #09949018;
 
   /* Backgrounds */
   --color-black: #0d0d0d;
@@ -94,11 +94,11 @@ html {
 .gold-shimmer-text {
   background: linear-gradient(
     90deg,
-    #bf4500 0%,
-    #e05a00 35%,
-    #f4a261 50%,
-    #e05a00 65%,
-    #bf4500 100%
+    #FA841E 0%,
+    #fb9a45 35%,
+    #fdc07a 50%,
+    #fb9a45 65%,
+    #FA841E 100%
   );
   background-size: 250% auto;
   -webkit-background-clip: text;
