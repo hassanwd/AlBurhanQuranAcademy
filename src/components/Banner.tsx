@@ -54,7 +54,7 @@ export default function Banner() {
 
           <p
             className="text-base md:text-xl text-[var(--color-sky)] tracking-[0.25em] uppercase mb-3 opacity-0 animate-fade-in-up delay-200"
-            style={{ animationFillMode: "forwards", fontWeight: "bold", textShadow: "0 0 20px 0 #000000" }}
+            style={{ animationFillMode: "forwards", fontWeight: "bold", textShadow: "0 0 50px 50px #000000" }}
           >
             Al Burhan Quran Academy
           </p>
