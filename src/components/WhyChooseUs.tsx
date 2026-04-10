@@ -12,12 +12,12 @@ const features = [
     desc: "Structured Hifz program with expert guidance to help students memorize the Holy Quran.",
   },
   {
-    title: "Female Teachers for Women",
-    desc: "Dedicated female Quran teachers available for sisters and young girls in a comfortable environment.",
-  },
-  {
     title: "Expert Teachers with English Fluency",
     desc: "Qualified and experienced Quran teachers who communicate clearly in English for better understanding.",
+  },
+    {
+    title: "Female Teachers for Women",
+    desc: "Dedicated female Quran teachers available for sisters and young girls in a comfortable environment.",
   },
   {
     title: "Monthly Progress Assessment",
@@ -91,7 +91,7 @@ export default function WhyChooseUs() {
             </div>
 
             {/* Bullet list */}
-            <ul className="grid grid-cols-2 gap-x-5 gap-y-3 max-w-lg">
+            <ul className="grid grid-cols-2 gap-x-3 gap-y-3 max-w-lg">
               {features.map(({ title }) => (
                 <li key={title} className="flex items-center gap-2.5">
                   <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] shrink-0" />

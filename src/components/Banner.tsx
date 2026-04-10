@@ -34,7 +34,7 @@ export default function Banner() {
                 style={{ backgroundImage: `url('${src}')` }}
               />
               {/* Subtle dark overlay */}
-              <div className="absolute inset-0 bg-black/40" />
+              <div className="absolute inset-0 bg-black/50" />
 
             </div>
           ))}
@@ -53,8 +53,8 @@ export default function Banner() {
           </div>
 
           <p
-            className="text-base md:text-lg text-[var(--color-sky)] tracking-[0.25em] uppercase mb-3 opacity-0 animate-fade-in-up delay-200"
-            style={{ animationFillMode: "forwards" }}
+            className="text-base md:text-xl text-[var(--color-sky)] tracking-[0.25em] uppercase mb-3 opacity-0 animate-fade-in-up delay-200"
+            style={{ animationFillMode: "forwards", fontWeight: "bold", textShadow: "0 0 20px 0 #000000" }}
           >
             Al Burhan Quran Academy
           </p>

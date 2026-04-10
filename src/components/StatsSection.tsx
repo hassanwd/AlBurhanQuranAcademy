@@ -11,11 +11,11 @@ export default function StatsSection() {
         {stats.map(({ num, label, desc }) => (
           <div
             key={label}
-            className="flex flex-col items-center text-center py-10 px-6 rounded-2xl border border-[var(--color-sky)]/20 bg-[var(--color-sky)]/5"
+            className="group flex flex-col items-center text-center py-10 px-6 rounded-2xl border border-[var(--color-sky)]/20 bg-[var(--color-sky)]/5 cursor-pointer transition-all duration-300 hover:border-orange-500/60 hover:bg-orange-500/10 hover:shadow-[0_0_30px_rgba(249,115,22,0.2)] hover:-translate-y-1"
           >
-            <div className="text-5xl font-black text-[var(--color-sky)] mb-1">{num}</div>
-            <div className="text-white font-bold text-lg mb-1">{label}</div>
-            <div className="text-gray-400 text-sm">{desc}</div>
+            <div className="text-5xl font-black text-[var(--color-sky)] mb-1 transition-colors duration-300 group-hover:text-orange-400">{num}</div>
+            <div className="text-white font-bold text-lg mb-1 transition-colors duration-300 group-hover:text-orange-300">{label}</div>
+            <div className="text-gray-400 text-sm transition-colors duration-300 group-hover:text-orange-200/70">{desc}</div>
           </div>
         ))}
       </div>
