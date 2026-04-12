@@ -34,8 +34,8 @@ export default function AboutHero() {
             <Image
               src="/logo-white.png"
               alt="AL Burhan Quran Academy Logo"
-              width={280}
-              height={280}
+              width={350}
+              height={350}
               className="object-contain p-8"
             />
           </div>
