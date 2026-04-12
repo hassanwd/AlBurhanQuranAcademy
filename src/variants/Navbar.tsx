@@ -1,8 +1,10 @@
 "use client";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const navLinks = [
-  { label: "Home", href: "/", active: true },
+  { label: "Home", href: "/" },
   { label: "About Us", href: "/about" },
   { label: "Courses", href: "/courses" },
   { label: "Downloads", href: "/downloads" },
@@ -13,6 +15,7 @@ const navLinks = [
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <nav className="bg-[var(--color-black-nav)] sticky top-0 z-50 border-b border-[var(--color-border)] shadow-[0_2px_16px_rgba(0,0,0,0.6)]">
@@ -20,23 +23,23 @@ export default function Navbar() {
         <div className="flex items-center justify-between">
           {/* Desktop Nav Links */}
           <ul className="hidden md:flex items-center">
-            {navLinks.map((link) => (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  className={`
-                    block px-4 py-4 text-sm font-medium tracking-wide transition-all duration-200
-                    ${
-                      link.active
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className={`block px-4 py-4 text-sm font-medium tracking-wide transition-all duration-200 ${
+                      isActive
                         ? "text-[var(--color-accent-light)] border-b-2 border-[var(--color-accent)]"
                         : "text-[var(--color-gray-muted)] hover:text-white hover:border-b-2 hover:border-[var(--color-accent-light)]"
-                    }
-                  `}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
 
           {/* Mobile Hamburger */}
@@ -58,23 +61,24 @@ export default function Navbar() {
         {/* Mobile Dropdown */}
         {menuOpen && (
           <ul className="md:hidden border-t border-[var(--color-border)] pb-2">
-            {navLinks.map((link) => (
-              <li key={link.label}>
-                <a
-                  href={link.href}
-                  className={`
-                    block px-4 py-3 text-sm font-medium
-                    ${
-                      link.active
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href;
+              return (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className={`block px-4 py-3 text-sm font-medium transition-all ${
+                      isActive
                         ? "text-[var(--color-accent-light)] border-l-2 border-[var(--color-accent)] pl-3"
-                        : "text-[var(--color-gray-muted)] hover:text-white hover:pl-3 transition-all"
-                    }
-                  `}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
+                        : "text-[var(--color-gray-muted)] hover:text-white hover:pl-3"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         )}
       </div>
