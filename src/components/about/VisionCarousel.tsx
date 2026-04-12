@@ -54,7 +54,7 @@ export default function VisionCarousel() {
 
         <div className="text-center mb-14">
           <h2 className="text-4xl md:text-5xl font-black text-white">
-            Our <span className="text-[var(--color-sky)]">Vision</span>
+            Our <span className="text-[var(--color-accent)]">Vision</span>
           </h2>
         </div>
 

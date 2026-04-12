@@ -35,7 +35,7 @@ export default function ValuesSection() {
 
         <div className="text-center mb-14">
           <h2 className="text-4xl md:text-5xl font-black text-white">
-            Our <span className="text-[var(--color-sky)]">Values</span>
+            Our <span className="text-[var(--color-accent)]">Values</span>
           </h2>
         </div>
 

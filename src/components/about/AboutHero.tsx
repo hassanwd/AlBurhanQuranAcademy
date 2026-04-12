@@ -8,11 +8,11 @@ export default function AboutHero() {
         {/* Left — text */}
         <div className="flex flex-col gap-6">
           <h2 className="text-4xl md:text-5xl font-black text-white leading-tight">
-            About <span className="text-[var(--color-sky)]">Us</span>
+            About <span className="text-[var(--color-accent)]">Us</span>
           </h2>
           <div className="flex flex-col gap-4 text-gray-300 text-base md:text-lg leading-relaxed">
             <p>
-              AL Burhan Quran Academy committed to providing authentic Islamic education to students around the world.
+              <span className="text-[var(--color-accent)]">AL Burhan Quran Academy</span> committed to providing authentic Islamic education to students around the world.
               Our academy is managed by a passionate team of professionals who strive to make Quran learning simple,
               accessible, and meaningful for everyone.
             </p>
