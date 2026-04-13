@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Qur'an Learn Academy",
@@ -23,6 +24,7 @@ export default function RootLayout({
       </head>
       <body suppressHydrationWarning className="min-h-screen flex flex-col bg-[var(--color-black)]">
         {children}
+        <Footer />
       </body>
     </html>
   );
