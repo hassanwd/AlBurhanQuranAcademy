@@ -58,7 +58,7 @@ export default function Footer() {
             href="/contact"
             className="shrink-0 px-6 py-3 rounded-xl bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white font-semibold text-sm transition-colors duration-200"
           >
-            Book a Free Trial Class
+            Book a Trial Class
           </Link>
         </div>
       </div>
