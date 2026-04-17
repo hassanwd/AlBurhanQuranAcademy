@@ -12,12 +12,12 @@ const navLinks = [
 ];
 
 const courses = [
-  "Quran Recitation",
-  "Tajweed Rules",
-  "Quran Memorization (Hifz)",
-  "Islamic Studies",
-  "Arabic Language",
-  "Tafseer ul Quran",
+  "Quranic Qaidah",
+  "Quran Gateway",
+  "Quran Memorizing",
+  "Translation of The Holy Quran",
+  "Women Quranic Course",
+  "Tajweed Course",
 ];
 
 const socials = [

@@ -53,9 +53,9 @@ export default function CoursesList() {
           {courses.map(({ image, title, description }, i) => (
             <div
               key={i}
-              className="bg-[var(--color-surface)] rounded-2xl overflow-hidden border border-[var(--color-sky)]/15 flex flex-col group"
+              className="bg-[var(--color-surface)] rounded-2xl border border-[var(--color-sky)]/20 flex flex-col group cursor-pointer transition-all duration-300 hover:border-orange-500/60"
             >
-              <div className="relative h-52 w-full overflow-hidden">
+              <div className="relative h-52 w-full overflow-hidden rounded-t-2xl">
                 <Image
                   src={image}
                   alt={title}
@@ -66,7 +66,7 @@ export default function CoursesList() {
               </div>
 
               <div className="p-6 flex flex-col gap-3 flex-1">
-                <h3 className="text-white font-black text-xl">{title}</h3>
+                <h3 className="text-white font-black text-xl transition-colors duration-300 group-hover:text-orange-400">{title}</h3>
                 {/* <div className="w-10 h-0.5 bg-[var(--color-accent)] rounded-full" /> */}
                 <p className="text-gray-400 text-sm leading-relaxed flex-1">{description}</p>
                 <button className="mt-4 self-start px-5 py-2 rounded-lg bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white text-sm font-semibold transition-colors">

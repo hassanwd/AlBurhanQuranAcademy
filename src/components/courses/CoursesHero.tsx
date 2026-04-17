@@ -101,7 +101,7 @@ export default function CoursesHero() {
                 <p className="text-gray-400 text-xs">Worldwide</p>
               </div>
             </div>
-
+ 
             {/* Corner accent lines */}
             <div className="absolute -top-2 -left-2 w-10 h-10 border-t-2 border-l-2 border-[var(--color-sky)]/60 rounded-tl-xl pointer-events-none" />
             <div className="absolute -bottom-2 -right-2 w-10 h-10 border-b-2 border-r-2 border-[var(--color-accent)]/60 rounded-br-xl pointer-events-none" />
