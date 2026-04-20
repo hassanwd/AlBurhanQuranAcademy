@@ -12,12 +12,12 @@ const navLinks = [
 ];
 
 const courses = [
-  "Quranic Qaidah",
-  "Quran Gateway",
-  "Quran Memorizing",
-  "Translation of The Holy Quran",
-  "Women Quranic Course",
-  "Tajweed Course",
+  { label: "Quranic Qaidah", slug: "quranic-qaidah" },
+  { label: "Quran Gateway", slug: "quran-gateway" },
+  { label: "Quran Memorizing", slug: "quran-memorizing" },
+  { label: "Translation of The Holy Quran", slug: "translation-holy-quran" },
+  { label: "Women Quranic Course", slug: "women-quranic-course" },
+  { label: "Tajweed Course", slug: "tajweed-course" },
 ];
 
 const socials = [
@@ -58,7 +58,7 @@ export default function Footer() {
             href="/contact"
             className="shrink-0 px-6 py-3 rounded-xl bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white font-semibold text-sm transition-colors duration-200"
           >
-            Book a Trial Class
+            Contact
           </Link>
         </div>
       </div>
@@ -119,12 +119,14 @@ export default function Footer() {
             <div className="w-8 h-0.5 bg-[var(--color-accent)] rounded-full" />
           </div>
           <ul className="flex flex-col gap-3">
-            {courses.map((course) => (
-              <li key={course} className="text-gray-400 text-sm flex items-center gap-2.5">
-                <svg className="w-3 h-3 text-[var(--color-sky)] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-                {course}
+            {courses.map(({ label, slug }) => (
+              <li key={slug}>
+                <Link href={`/courses#${slug}`} className="group text-gray-400 text-sm hover:text-white transition-colors flex items-center gap-2.5">
+                  <svg className="w-3 h-3 text-[var(--color-sky)] shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                  {label}
+                </Link>
               </li>
             ))}
           </ul>
