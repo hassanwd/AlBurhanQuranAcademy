@@ -27,8 +27,6 @@ const DAY_OPTIONS = [
   { label: "Saturday to Sunday", days: "Sat & Sun" },
 ];
 
-
-
 interface Props {
   open: boolean;
   selectedCourse: string;
@@ -114,7 +112,7 @@ export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" onClick={onClose} />
 
-      <div className="relative w-full max-w-xl bg-[var(--color-black-soft)] border border-[var(--color-border)] rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+      <div className="relative w-full max-w-5xl bg-[var(--color-black-soft)] border border-[var(--color-border)] rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[96vh]">
 
         {/* ── Header ── */}
         <div className="bg-gradient-to-r from-[var(--color-green)]/40 via-[var(--color-surface)] to-[var(--color-accent)]/20 px-6 py-5 border-b border-[var(--color-border)] shrink-0">
@@ -187,7 +185,7 @@ export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
             /* ── Step 1: Course Selection ── */
             <div className="flex flex-col gap-4">
               <p className="text-gray-400 text-sm">Choose the course you&apos;d like to enroll in. You can change this on the next step.</p>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-3 gap-3">
                 {COURSES.map(({ title, image }) => {
                   const active = course === title;
                   return (
@@ -199,7 +197,7 @@ export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
                         active ? "border-[var(--color-accent)] shadow-[0_0_20px_rgba(250,132,30,0.25)]" : "border-[var(--color-border)] hover:border-[var(--color-accent)]/50"
                       }`}
                     >
-                      <div className="relative h-24 w-full overflow-hidden">
+                      <div className="relative h-32 w-full overflow-hidden">
                         <Image src={image} alt={title} fill className={`object-cover transition-transform duration-500 ${active ? "scale-105" : "group-hover:scale-105"}`} />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                       </div>
@@ -304,9 +302,7 @@ export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
                       type="time"
                       value={form.convenientTimeFrom}
                       onChange={(e) => set("convenientTimeFrom", e.target.value)}
-                      className={`w-full bg-[var(--color-surface-raised)] border ${
-                        errors.convenientTimeFrom ? "border-red-500" : "border-[var(--color-border)]"
-                      } rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[var(--color-accent)] transition-colors [color-scheme:dark]`}
+                      className={`w-full bg-[var(--color-surface-raised)] border ${errors.convenientTimeFrom ? "border-red-500" : "border-[var(--color-border)]"} rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[var(--color-accent)] transition-colors [color-scheme:dark]`}
                     />
                     {errors.convenientTimeFrom && <p className="text-red-400 text-xs mt-1">{errors.convenientTimeFrom}</p>}
                   </div>
@@ -316,9 +312,7 @@ export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
                       type="time"
                       value={form.convenientTimeTo}
                       onChange={(e) => set("convenientTimeTo", e.target.value)}
-                      className={`w-full bg-[var(--color-surface-raised)] border ${
-                        errors.convenientTimeTo ? "border-red-500" : "border-[var(--color-border)]"
-                      } rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[var(--color-accent)] transition-colors [color-scheme:dark]`}
+                      className={`w-full bg-[var(--color-surface-raised)] border ${errors.convenientTimeTo ? "border-red-500" : "border-[var(--color-border)]"} rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-[var(--color-accent)] transition-colors [color-scheme:dark]`}
                     />
                     {errors.convenientTimeTo && <p className="text-red-400 text-xs mt-1">{errors.convenientTimeTo}</p>}
                   </div>
@@ -356,7 +350,7 @@ export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
               {/* Preferred Days — only for day-based courses */}
               {DAY_COURSES.includes(course) && (
                 <div>
-                  <label className="text-gray-300 text-xs font-semibold uppercase tracking-wider mb-2 block">Class Frequency *</label>
+                  <label className="text-gray-300 text-xs font-semibold uppercase tracking-wider mb-2 block">Preferred Days *</label>
                   <div className="flex flex-col gap-2">
                     {DAY_OPTIONS.map(({ label, days }) => (
                       <button

@@ -12,10 +12,10 @@ export default function ContactHero() {
       <div className="text-center">
         <p className="text-[var(--color-sky)] text-xs tracking-widest uppercase font-semibold mb-3">Get In Touch</p>
         <h2 className="text-4xl md:text-5xl font-black text-white">
-          Book a <span className="text-[var(--color-accent)]">Free Trial</span> Class
+          Book a <span className="text-[var(--color-accent)]">Trial</span> Class
         </h2>
         <p className="text-gray-400 mt-4 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
-          Fill in the form below and one of our teachers will reach out to schedule your free trial class at a time that suits you.
+          Fill in the form below and one of our teachers will reach out to schedule your trial class at a time that suits you.
         </p>
       </div>
 

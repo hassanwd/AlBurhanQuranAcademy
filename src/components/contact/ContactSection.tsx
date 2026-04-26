@@ -106,7 +106,7 @@ export default function ContactSection() {
                 "Qualified male & female teachers",
                 "Flexible scheduling — any timezone",
                 "Classes via Zoom, Teams & Skype",
-                "Free trial — no commitment",
+                "Trial — no commitment",
               ].map((point) => (
                 <div key={point} className="flex items-center gap-3">
                   <div className="w-5 h-5 rounded-full bg-[var(--color-sky)]/15 flex items-center justify-center shrink-0">
@@ -137,7 +137,7 @@ export default function ContactSection() {
                   </div>
                   <h3 className="text-white font-black text-2xl">Request Received!</h3>
                   <p className="text-gray-400 text-sm max-w-sm leading-relaxed">
-                    JazakAllah Khair! We&apos;ll contact you shortly to confirm your free trial class.
+                    JazakAllah Khair! We&apos;ll contact you shortly to confirm your trial class.
                   </p>
                   <button
                     onClick={() => { setSubmitted(false); setForm({ name: "", email: "", phone: "", course: "", message: "" }); }}
@@ -217,7 +217,7 @@ export default function ContactSection() {
                     type="submit"
                     className="mt-2 w-full py-4 rounded-xl bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white font-bold text-sm tracking-wide transition-colors duration-200 flex items-center justify-center gap-2 group"
                   >
-                    Book My Free Trial Class
+                    Book a Trial Class
                     <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>

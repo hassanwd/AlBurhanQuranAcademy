@@ -106,3 +106,23 @@ html {
   background-clip: text;
   animation: shimmer 5s ease-in-out infinite;
 }
+
+/* ── Global Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-black-soft);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent-hover);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) var(--color-black-soft);
+}
