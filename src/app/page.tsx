@@ -3,6 +3,7 @@ import HadeesSection from "@/components/HadeesSection";
 import Header from "@/components/Header";
 import StatsSection from "@/components/StatsSection";
 import WhyChooseUs from "@/components/WhyChooseUs";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <StatsSection />
       <WhyChooseUs />
       <HadeesSection />
+      <Footer />
     </main>
   );
 }

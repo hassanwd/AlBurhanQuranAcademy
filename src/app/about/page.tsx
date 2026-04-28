@@ -3,6 +3,7 @@ import AboutHero from "@/components/about/AboutHero";
 import VisionCarousel from "@/components/about/VisionCarousel";
 import MissionSection from "@/components/about/MissionSection";
 import ValuesSection from "@/components/about/ValuesSection";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "About Us | AL Burhan Quran Academy",
@@ -17,6 +18,7 @@ export default function AboutPage() {
       <VisionCarousel />
       <MissionSection />
       <ValuesSection />
+      <Footer />
     </main>
   );
 }

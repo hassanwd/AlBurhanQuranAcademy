@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import CoursesHero from "@/components/courses/CoursesHero";
 import CoursesList from "@/components/courses/CoursesList";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "Courses | Al Burhan Quran Academy",
@@ -13,6 +14,7 @@ export default function CoursesPage() {
       <Header />
       <CoursesHero />
       <CoursesList />
+      <Footer />
     </main>
   );
 }

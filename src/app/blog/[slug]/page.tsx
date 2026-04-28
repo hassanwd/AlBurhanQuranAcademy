@@ -40,7 +40,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
         <Image src={post.image} alt={post.title} fill className="object-cover" priority />
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-black)] via-black/60 to-black/30" />
         <div className="absolute inset-0 flex items-end">
-          <div className="max-w-4xl mx-auto w-full px-4 pb-10">
+          <div className="max-w-7xl mx-auto w-full px-4 pb-10">
             <span className={`inline-block text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full border ${c.border} ${c.bg} ${c.text} mb-4`}>
               {post.category}
             </span>
@@ -58,7 +58,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
 
       {/* Article body */}
       <section className="bg-[var(--color-black)] py-16 px-4">
-        <div className="max-w-4xl mx-auto grid lg:grid-cols-[1fr_280px] gap-12 items-start">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-[1fr_300px] gap-10 items-start">
 
           {/* Main content */}
           <article className="flex flex-col gap-8">
@@ -75,18 +75,18 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
             {post.sections.map((section, i) => (
               <div key={i} className="flex flex-col gap-4">
                 {section.heading && (
-                  <h2 className="text-xl md:text-2xl font-black text-white flex items-center gap-3">
+                  <h2 className="text-2xl md:text-3xl font-black text-white flex items-center gap-3">
                     <span className="w-1 h-6 rounded-full bg-[var(--color-accent)] shrink-0" />
                     {section.heading}
                   </h2>
                 )}
-                <p className="text-gray-300 text-base leading-relaxed">{section.body}</p>
+                <p className="text-gray-300 text-lg leading-relaxed">{section.body}</p>
 
                 {/* Bullet list */}
                 {section.list && (
                   <ul className="flex flex-col gap-2 pl-2">
                     {section.list.map((item, j) => (
-                      <li key={j} className="flex items-start gap-3 text-gray-300 text-sm">
+                      <li key={j} className="flex items-start gap-3 text-gray-300 text-base">
                         <span className="mt-1.5 w-2 h-2 rounded-full bg-[var(--color-accent)] shrink-0" />
                         {item}
                       </li>
