@@ -99,7 +99,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                   <div className="rounded-2xl border border-[var(--color-sky)]/30 bg-[var(--color-sky)]/5 px-6 py-6 flex flex-col gap-3">
                     <p className="arabic text-2xl text-white text-right leading-loose">{section.arabic}</p>
                     {section.arabicRef && (
-                      <p className="text-[var(--color-sky)] text-xs font-semibold text-right">﴿ {section.arabicRef} ﴾</p>
+                      <p className="text-[var(--color-sky)] text-xs font-semibold text-right">﴾ {section.arabicRef} ﴿</p>
                     )}
                     {section.translation && (
                       <p className="text-gray-400 text-sm leading-relaxed italic border-t border-[var(--color-border)] pt-3">
