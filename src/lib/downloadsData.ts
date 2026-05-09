@@ -264,14 +264,6 @@ export const downloadsData = [
     tag: "Translation",
     pdfs: [
       {
-        id: "complete-quran-english-translation",
-        name: "Complete Quran English Translation",
-        description: "Complete Quran with color-coded Tajweed for accurate and easy recitation.",
-        pages: "555 pages",
-        viewUrl: "https://drive.google.com/file/d/1v9XLzah-sP2oSRmEUB5ivM8rYzUaZLq-/preview",
-        downloadUrl: "https://drive.google.com/uc?export=download&id=1v9XLzah-sP2oSRmEUB5ivM8rYzUaZLq-",
-      },
-      {
         id: "juz-01",
         name: "Juz 01",
         description: "Read Juz 01 with color-coded Tajweed for smooth and accurate recitation.",
