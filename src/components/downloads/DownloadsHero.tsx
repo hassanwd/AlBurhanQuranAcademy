@@ -23,7 +23,6 @@ export default function DownloadsHero() {
           Islamic{" "}
           <span className="relative inline-block">
             <span className="text-[var(--color-accent)]">Downloads</span>
-            <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-[var(--color-accent)] to-transparent rounded-full" />
           </span>
         </h1>
 
@@ -34,7 +33,7 @@ export default function DownloadsHero() {
         {/* Stats row */}
         <div className="flex items-center gap-8 mt-2">
           {[
-            { value: "1+", label: "Collections" },
+            { value: "7", label: "Collections" },
             { value: "Free", label: "Always" },
             { value: "PDF", label: "Format" },
           ].map(({ value, label }) => (
