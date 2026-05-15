@@ -28,19 +28,23 @@ export default function AboutHero() {
           </div>
         </div>
 
-        {/* Right — logo */}
-        <div className="flex items-center justify-center">
-          <div className="relative w-72 h-72 md:w-96 md:h-96 rounded-full bg-[var(--color-sky)]/10 border border-[var(--color-sky)]/20 flex items-center justify-center shadow-[0_0_60px_rgba(9,148,144,0.15)]">
+        <div className="flex justify-center">
+          <div className="relative w-72 md:w-80 rounded-3xl overflow-hidden">
             <Image
-              src="/logo-white.png"
-              alt="AL Burhan Quran Academy Logo"
-              width={350}
-              height={350}
-              className="object-contain p-8"
+              src="/ateeq.png"
+              alt="Prof. H. Ateeq ur Rehman"
+              width={320}
+              height={420}
+              className="w-full h-[420px] object-cover object-top"
             />
+            {/* Bottom overlay */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent px-6 py-6">
+              <div className="w-10 h-[2px] bg-[var(--color-accent)] mb-3" />
+              <p className="text-white text-xl font-bold leading-snug">Prof. H. Ateeq ur Rehman</p>
+              <p className="text-[var(--color-accent)] text-xs font-semibold tracking-[0.18em] uppercase mt-1">Founder &amp; CEO</p>
+            </div>
           </div>
         </div>
-
       </div>
     </section>
   );

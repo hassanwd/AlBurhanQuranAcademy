@@ -258,6 +258,8 @@ export const downloadsData = [
   },
   {
     id: "english-quran-word-to-word-translation",
+
+
     name: "English Quran Word to Word Translation",
     description: "A comprehensive word-by-word English translation of the Quran to help understand the meaning of every verse.",
     image: "/English Quran Word to word Translation - 2 downloads.jpeg",
