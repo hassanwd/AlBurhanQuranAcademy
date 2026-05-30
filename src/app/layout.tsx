@@ -22,7 +22,7 @@ export default function RootLayout({
         />
       </head>
       <body suppressHydrationWarning className="min-h-screen flex flex-col bg-[var(--color-black)]">
-        {children}
+        <main className="flex flex-col flex-1">{children}</main>
       </body>
     </html>
   );

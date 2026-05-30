@@ -4,12 +4,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const COURSES = [
-  { title: "Quranic Qaidah", image: "/course1.jpeg" },
-  { title: "Quran Gateway", image: "/course2.jpeg" },
-  { title: "Quran Memorizing", image: "/course3.jpeg" },
-  { title: "Translation of The Holy Quran", image: "/course4.jpeg" },
-  { title: "Women Quranic Course", image: "/course5.jpeg" },
-  { title: "Tajweed Course", image: "/course6.jpeg" },
+  { title: "Quranic Qaidah", image: "/Quranic Qaidah.png" },
+  { title: "Quran Gateway", image: "/Quran Gateway.png" },
+  { title: "Quran Memorizing", image: "/Quran memorizing Course.png" },
+  { title: "Translation of The Holy Quran", image: "/Translation of the Holy Quran.png" },
+  { title: "Women Quranic Course", image: "/Woman Quranic Course.png" },
+  { title: "Tajweed Course", image: "/Tajweed Course.png" },
 ];
 
 const FREQUENCY_COURSES = ["Quranic Qaidah", "Quran Gateway", "Quran Memorizing", "Women Quranic Course"];
