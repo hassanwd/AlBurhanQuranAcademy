@@ -153,7 +153,7 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="mailto:info@quranlearnacademy.com" className="group flex items-start gap-3 text-gray-400 text-sm hover:text-white transition-colors">
+              <a href="mailto:info@alburhanquranacademy.org" className="group flex items-start gap-3 text-gray-400 text-sm hover:text-white transition-colors">
                 <div className="w-8 h-8 rounded-lg bg-[var(--color-surface)] border border-[var(--color-border)] flex items-center justify-center shrink-0 group-hover:border-[var(--color-sky)]/40 transition-colors">
                   <svg className="w-4 h-4 stroke-[var(--color-accent)] fill-none" viewBox="0 0 24 24" strokeWidth={2}>
                     <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -162,7 +162,7 @@ export default function Footer() {
                 </div>
                 <div>
                   <p className="text-gray-500 text-xs uppercase tracking-wider mb-0.5">Email</p>
-                  <p>info@quranlearnacademy.com</p>
+                  <p>info@alburhanquranacademy.org</p>
                 </div>
               </a>
             </li>

@@ -23,8 +23,8 @@ const contactInfo = [
     ),
     color: "accent",
     label: "Email",
-    value: "info@quranlearnacademy.com",
-    href: "mailto:info@quranlearnacademy.com",
+    value: "info@alburhanquranacademy.org",
+    href: "mailto:info@alburhanquranacademy.org",
   },
 ];
 
