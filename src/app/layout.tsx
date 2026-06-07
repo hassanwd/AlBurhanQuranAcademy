@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Qur'an Learn Academy",
-  description: "Online Qur'an Classes for all ages",
+  title: "Al Burhan Quran Academy",
+  description: "Online Quran Classes for all ages",
 };
 
 export default function RootLayout({
