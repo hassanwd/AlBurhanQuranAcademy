@@ -6,12 +6,11 @@ const UserSchema = new Schema(
     name:     { type: String, required: true },
     email:    { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
-    role:     { type: String, enum: ["admin", "superadmin"], default: "admin" },
+    role:     { type: String, enum: ["user", "admin", "superadmin"], default: "user" },
   },
   { timestamps: true }
 );
 
-// Hash password before saving
 UserSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
   this.password = await bcrypt.hash(this.password, 10);
