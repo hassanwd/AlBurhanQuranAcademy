@@ -10,7 +10,7 @@ const team = [
     badge: "bg-[var(--color-sky)]/15 text-[var(--color-sky)] border-[var(--color-sky)]/30",
   },
   {
-    name: "Saikh Abdul Mannan Madni",
+    name: "Shaikh Abdul Mannan Madni",
     role: "Tafseer & Hadees",
     bio: "A distinguished scholar deeply rooted in classical Islamic sciences, offering students profound insights into Quranic exegesis and the authenticated traditions of the Prophet ﷺ.",
     image: "/Saikh Abdul Mannan Madni.jpeg",
@@ -26,7 +26,7 @@ const team = [
     badge: "bg-[var(--color-accent)]/15 text-[var(--color-accent)] border-[var(--color-accent)]/30",
   },
   {
-    name: "Saikh Abdul Hannan",
+    name: "Shaikh Abdul Hannan",
     role: "Asool e Fiqh",
     bio: "An expert in the foundational principles of Islamic jurisprudence, guiding students through the methodology of deriving rulings and understanding the deep roots of Fiqh.",
     image: "/Saikh Abdul Hannan kelani.jpeg",
