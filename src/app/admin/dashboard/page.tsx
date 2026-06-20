@@ -19,13 +19,6 @@ const statusColors: Record<string, string> = {
   rejected: "text-red-400 bg-red-400/10 border border-red-400/30",
 };
 
-const quickLinks = [
-  { label: "Add New Blog",     href: "/admin/blogs",       color: "var(--color-accent)" },
-  { label: "Add New Course",   href: "/admin/courses",     color: "var(--color-sky)" },
-  { label: "View Enrollments", href: "/admin/enrollments", color: "var(--color-green-light)" },
-  { label: "View Contacts",    href: "/admin/contacts",    color: "#f59e0b" },
-];
-
 export default function DashboardPage() {
   return (
     <div className="flex flex-col gap-8">
@@ -50,18 +43,6 @@ export default function DashboardPage() {
             </div>
           </div>
         ))}
-      </div>
-
-      {/* Quick Actions */}
-      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl p-6">
-        <h3 className="text-white font-bold text-sm uppercase tracking-widest mb-4">Quick Actions</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {quickLinks.map(({ label, href, color }) => (
-            <a key={href} href={href} className="flex items-center justify-center px-4 py-3 rounded-xl border border-[var(--color-border)] text-sm font-semibold transition-all duration-200 hover:border-current hover:bg-white/5" style={{ color }}>
-              {label}
-            </a>
-          ))}
-        </div>
       </div>
 
       {/* Recent Enrollments */}

@@ -4,6 +4,8 @@ import { connectDB } from "@/lib/mongodb";
 import { signToken } from "@/lib/auth";
 import { User } from "@/models/User";
 
+const COOKIE_MAX_AGE = Number(process.env.COOKIE_MAX_AGE) || 60 * 60 * 24 * 30;
+
 export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
@@ -29,7 +31,7 @@ export async function POST(req: NextRequest) {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 7, // 7 days
+      maxAge: COOKIE_MAX_AGE,
       path: "/",
     });
 
