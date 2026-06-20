@@ -8,18 +8,29 @@ const COOKIE_MAX_AGE = Number(process.env.COOKIE_MAX_AGE) || 60 * 60 * 24 * 30;
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, password } = await req.json();
+    const { email, password } = (await req.json()) as { email?: string; password?: string };
+    const normalizedEmail = String(email || "").trim().toLowerCase();
+    const normalizedPassword = String(password || "").trim();
 
-    if (!email || !password)
+    if (!normalizedEmail || !normalizedPassword)
       return NextResponse.json({ message: "Email and password are required" }, { status: 400 });
 
     await connectDB();
 
-    const user = await User.findOne({ email: email.toLowerCase() });
+    const user = await User.findOne({ email: normalizedEmail });
     if (!user)
       return NextResponse.json({ message: "Invalid email or password" }, { status: 401 });
 
-    const isMatch = await bcrypt.compare(password, user.password);
+    let isMatch = false;
+    const passwordIsHashed = /^\$2[aby]\$/.test(user.password);
+    if (passwordIsHashed) {
+      isMatch = await bcrypt.compare(normalizedPassword, user.password);
+    } else if (normalizedPassword === user.password) {
+      isMatch = true;
+      user.password = await bcrypt.hash(normalizedPassword, 10);
+      await user.save();
+    }
+
     if (!isMatch)
       return NextResponse.json({ message: "Invalid email or password" }, { status: 401 });
 

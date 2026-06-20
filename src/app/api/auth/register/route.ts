@@ -5,12 +5,21 @@ import { User } from "@/models/User";
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, password, role } = await req.json();
+    const { name, email, password, role } = (await req.json()) as {
+      name?: string;
+      email?: string;
+      password?: string;
+      role?: string;
+    };
 
-    if (!name || !email || !password)
+    const normalizedName = String(name || "").trim();
+    const normalizedEmail = String(email || "").trim().toLowerCase();
+    const normalizedPassword = String(password || "").trim();
+
+    if (!normalizedName || !normalizedEmail || !normalizedPassword)
       return NextResponse.json({ message: "All fields are required" }, { status: 400 });
 
-    if (password.length < 6)
+    if (normalizedPassword.length < 6)
       return NextResponse.json({ message: "Password must be at least 6 characters" }, { status: 400 });
 
     // Only admins can create admin/superadmin accounts
