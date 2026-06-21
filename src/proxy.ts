@@ -4,7 +4,7 @@ import { verifyToken } from "@/lib/auth";
 const ADMIN_PATHS = ["/admin"];
 const PROTECTED_PATHS = ["/enroll"];
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   const isAdmin = ADMIN_PATHS.some((p) => pathname.startsWith(p));
