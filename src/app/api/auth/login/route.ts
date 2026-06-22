@@ -18,6 +18,7 @@ export async function POST(req: NextRequest) {
     await connectDB();
 
     const user = await User.findOne({ email: normalizedEmail });
+
     if (!user)
       return NextResponse.json({ message: "Invalid email or password" }, { status: 401 });
 
@@ -25,12 +26,8 @@ export async function POST(req: NextRequest) {
     const passwordIsHashed = /^\$2[aby]\$/.test(user.password);
     if (passwordIsHashed) {
       isMatch = await bcrypt.compare(normalizedPassword, user.password);
-    } else if (normalizedPassword === user.password) {
-      isMatch = true;
-      user.password = await bcrypt.hash(normalizedPassword, 10);
-      await user.save();
-    }
-
+    } 
+    
     if (!isMatch)
       return NextResponse.json({ message: "Invalid email or password" }, { status: 401 });
 
