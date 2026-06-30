@@ -1,14 +1,18 @@
 "use client";
 import { useState } from "react";
 
-export default function TopBar() {
+type TopBarProps = {
+  className?: string;
+};
+
+export default function TopBar({ className = "" }: TopBarProps) {
   const [showContactInfo, setShowContactInfo] = useState(false);
 
   return (
-    <div className="bg-[var(--color-surface)] border-b border-[var(--color-border)] transition-all duration-300">
+    <div className={`w-full bg-transparent border-0 transition-all duration-300 ${className}`}>
       {/* Main Top Bar */}
-      <div className="py-2.5 lg:py-3.5 px-4 sm:px-6 lg:px-8 transition-all duration-300">
-        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+      <div className="py-0 px-0 transition-all duration-300">
+        <div className="w-full flex items-center justify-end gap-4">
           {/* Desktop Contact Info */}
           <div className="hidden md:flex items-center gap-6 text-sm text-[var(--color-gray-muted)]">
             {/* Phone */}
