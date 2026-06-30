@@ -11,7 +11,6 @@ function LoginForm() {
   const searchParams = useSearchParams();
   const redirect = searchParams.get("redirect") || "/";
   const error = searchParams.get("error");
-  const registered = searchParams.get("registered") === "1";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -76,14 +75,6 @@ function LoginForm() {
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-            {registered && (
-              <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-green-500/10 border border-green-500/30 text-green-400 text-sm">
-                <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-                Account created! Please sign in to continue.
-              </div>
-            )}
             {err && (
               <div className="flex items-center gap-2 px-4 py-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-sm">
                 <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
@@ -152,20 +143,6 @@ function LoginForm() {
             </button>
           </form>
 
-          <div className="flex items-center gap-3">
-            <div className="flex-1 h-px bg-white/5" />
-            <p className="text-gray-600 text-xs">New here?</p>
-            <div className="flex-1 h-px bg-white/5" />
-          </div>
-
-          <p className="text-center text-sm">
-            <Link
-              href={`/register${redirect !== "/" ? `?redirect=${redirect}` : ""}`}
-              className="text-[var(--color-sky)] hover:underline font-semibold"
-            >
-              Create an account
-            </Link>
-          </p>
         </div>
       </div>
     </div>

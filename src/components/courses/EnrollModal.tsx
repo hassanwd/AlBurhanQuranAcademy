@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { useAuth } from "@/hooks/useAuth";
 
 const COURSES = [
   { title: "Quranic Qaidah", image: "/Quranic Qaidah.png" },
@@ -59,7 +58,6 @@ const EMPTY: FormData = {
 type FieldKey = keyof FormData | "course";
 
 export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
-  const { user, loading: authLoading } = useAuth();
   const [step, setStep] = useState(1);
   const [course, setCourse] = useState(selectedCourse);
   const [form, setForm] = useState<FormData>({ ...EMPTY });
@@ -82,35 +80,6 @@ export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
   }, [open]);
 
   if (!open) return null;
-
-  // Not logged in — show login gate instead of form
-  if (!authLoading && !user) {
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-        <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" onClick={onClose} />
-        <div className="relative w-full max-w-sm bg-[var(--color-black-soft)] border border-[var(--color-border)] rounded-2xl p-8 flex flex-col items-center gap-5 text-center shadow-2xl">
-          <div className="w-14 h-14 rounded-full bg-[var(--color-sky)]/10 border border-[var(--color-sky)]/30 flex items-center justify-center">
-            <svg className="w-7 h-7 text-[var(--color-sky)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-            </svg>
-          </div>
-          <div>
-            <h3 className="text-white font-black text-lg">Login Required</h3>
-            <p className="text-gray-400 text-sm mt-1.5 leading-relaxed">You need to be signed in to enroll in a course.</p>
-          </div>
-          <div className="flex gap-3 w-full">
-            <button onClick={onClose} className="flex-1 py-2.5 rounded-xl border border-[var(--color-border)] text-gray-400 hover:text-white text-sm font-medium transition-colors">Cancel</button>
-            <a
-              href={`/login?redirect=/courses`}
-              className="flex-1 py-2.5 rounded-xl bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white text-sm font-bold transition-colors text-center"
-            >
-              Sign In
-            </a>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   const set = (key: keyof FormData, value: string) =>
     setForm((p) => ({ ...p, [key]: value }));

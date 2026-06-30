@@ -2,15 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifyToken } from "@/lib/auth";
 
 const ADMIN_PATHS = ["/admin"];
-const PROTECTED_PATHS = ["/enroll"];
 
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   const isAdmin = ADMIN_PATHS.some((p) => pathname.startsWith(p));
-  const isProtected = PROTECTED_PATHS.some((p) => pathname.startsWith(p));
 
-  if (!isAdmin && !isProtected) return NextResponse.next();
+  if (!isAdmin) return NextResponse.next();
 
   const token = req.cookies.get("token")?.value;
 
@@ -38,5 +36,5 @@ export async function proxy(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/:path*", "/enroll/:path*"],
+  matcher: ["/admin/:path*"],
 };
