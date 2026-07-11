@@ -24,7 +24,7 @@ const contactInfo = [
     color: "accent",
     label: "Email",
     value: "info@alburhanquranacademy.org",
-    href: "mailto:info@alburhanquranacademy.org",
+    href: "/contact",
   },
 ];
 
@@ -39,6 +39,8 @@ const courses = [
 
 export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [form, setForm] = useState({
     name: "", email: "", phone: "", course: "", message: "",
   });
@@ -47,9 +49,30 @@ export default function ContactSection() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/contacts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.message || "Unable to submit your request right now.");
+      }
+
+      setSubmitted(true);
+      setForm({ name: "", email: "", phone: "", course: "", message: "" });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unable to submit your request right now.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -202,11 +225,16 @@ export default function ContactSection() {
                     />
                   </div>
 
+                  {error && (
+                    <p className="text-sm text-red-400">{error}</p>
+                  )}
+
                   <button
                     type="submit"
-                    className="mt-2 w-full py-4 rounded-xl bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white font-bold text-sm tracking-wide transition-colors duration-200 flex items-center justify-center gap-2 group"
+                    disabled={isSubmitting}
+                    className="mt-2 w-full py-4 rounded-xl bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white font-bold text-sm tracking-wide transition-colors duration-200 flex items-center justify-center gap-2 group disabled:opacity-70 disabled:cursor-not-allowed"
                   >
-                    Book a Trial Class
+                    {isSubmitting ? "Sending..." : "Book a Trial Class"}
                     <svg className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>

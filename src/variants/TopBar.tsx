@@ -1,20 +1,17 @@
 "use client";
-import { useState } from "react";
 
 type TopBarProps = {
   className?: string;
 };
 
 export default function TopBar({ className = "" }: TopBarProps) {
-  const [showContactInfo, setShowContactInfo] = useState(false);
-
   return (
-    <div className={`w-full bg-transparent border-0 transition-all duration-300 ${className}`}>
+    <div className={`relative w-auto max-w-fit bg-transparent border-0 transition-all duration-300 ${className}`}>
       {/* Main Top Bar */}
       <div className="py-0 px-0 transition-all duration-300">
-        <div className="w-full flex items-center justify-end gap-4">
-          {/* Desktop Contact Info */}
-          <div className="hidden md:flex items-center gap-6 text-sm text-[var(--color-gray-muted)]">
+        <div className="w-full flex flex-wrap items-center justify-end gap-2 sm:gap-3">
+          {/* Desktop / Tablet Contact Info */}
+          <div className="hidden md:flex items-center gap-4 lg:gap-6 text-sm text-[var(--color-gray-muted)]">
             {/* Phone */}
             <div className="flex items-center gap-2 group cursor-pointer transition-all duration-300">
               <div className="p-1.5 rounded-lg bg-[var(--color-accent)]/10 group-hover:bg-[var(--color-accent)]/20 transition-all duration-300 group-hover:shadow-md">
@@ -39,7 +36,7 @@ export default function TopBar({ className = "" }: TopBarProps) {
                 </svg>
               </div>
               <a
-                href="mailto:info@alburhanquranacademy.org"
+                href="/contact"
                 className="hover:text-[var(--color-sky)] transition-all duration-300 font-medium group-hover:translate-x-1"
               >
                 info@alburhanquranacademy.org
@@ -50,27 +47,31 @@ export default function TopBar({ className = "" }: TopBarProps) {
           {/* Desktop Spacer */}
           <div className="hidden md:block flex-1" />
 
-          {/* Mobile Contact Toggle */}
-          <button
-            onClick={() => setShowContactInfo(!showContactInfo)}
-            className="md:hidden p-2 rounded-lg hover:bg-[var(--color-accent)]/10 transition-all duration-300 group relative hover:shadow-md active:scale-95"
-            aria-label="Contact info"
-            title="View contact info"
-          >
-            <svg 
-              className="w-5 h-5 text-[var(--color-accent)] transition-all duration-300 group-hover:scale-110 group-hover:rotate-12" 
-              viewBox="0 0 24 24" 
-              fill="currentColor"
+          {/* Mobile Contact Quick Links */}
+          <div className="flex md:hidden items-center gap-1.5 text-[10px] text-[var(--color-gray-muted)]">
+            <a
+              href="tel:+13236395853"
+              className="flex items-center gap-1 rounded-full bg-[var(--color-accent)]/10 px-2 py-1 transition-all duration-300 hover:bg-[var(--color-accent)]/20"
             >
-              <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.58a1 1 0 0 1-.25 1.01l-2.2 2.2z" />
-            </svg>
-            <span className="absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
-              Contact
-            </span>
-          </button>
+              <svg className="w-3.5 h-3.5 fill-[var(--color-accent)]" viewBox="0 0 24 24">
+                <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.58a1 1 0 0 1-.25 1.01l-2.2 2.2z" />
+              </svg>
+              <span className="font-medium">Call</span>
+            </a>
+            <a
+              href="/contact"
+              className="flex items-center gap-1 rounded-full bg-[var(--color-accent)]/10 px-2 py-1 transition-all duration-300 hover:bg-[var(--color-accent)]/20"
+            >
+              <svg className="w-3.5 h-3.5 stroke-[var(--color-accent)] fill-none" viewBox="0 0 24 24" strokeWidth="2">
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="m2 7 10 7 10-7" />
+              </svg>
+              <span className="font-medium">Mail</span>
+            </a>
+          </div>
 
           {/* Social Icons - Show on all screens */}
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="ml-auto flex items-center gap-2 sm:gap-3">
             {/* Facebook */}
             <a
               href="https://www.facebook.com/share/18AVd6ZE6s/"
@@ -108,51 +109,6 @@ export default function TopBar({ className = "" }: TopBarProps) {
         </div>
       </div>
 
-      {/* Mobile Contact Info Dropdown */}
-      <div
-        className={`md:hidden border-t border-[var(--color-border)] bg-gradient-to-b from-[var(--color-surface)] to-[var(--color-surface)]/50 backdrop-blur-sm transition-all duration-500 overflow-hidden ${
-          showContactInfo ? "opacity-100 visible max-h-96" : "opacity-0 invisible max-h-0"
-        }`}
-      >
-        <div className="px-4 sm:px-6 py-4 space-y-3 animate-in fade-in slide-in-from-top-2 duration-300">
-            {/* Phone */}
-            <a
-              href="tel:+13236395853"
-              className="flex items-center gap-3 p-3 rounded-lg hover:bg-[var(--color-accent)]/10 transition-all duration-300 group active:scale-95 hover:shadow-md"
-            >
-              <div className="p-2 rounded-lg bg-[var(--color-accent)]/20 group-hover:bg-[var(--color-accent)]/30 transition-all duration-300 group-hover:shadow-md">
-                <svg className="w-5 h-5 fill-[var(--color-accent)] transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24">
-                  <path d="M6.62 10.79a15.053 15.053 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.61 21 3 13.39 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.46.57 3.58a1 1 0 0 1-.25 1.01l-2.2 2.2z" />
-                </svg>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-xs text-[var(--color-gray-muted)] uppercase tracking-wide transition-colors duration-300">Phone</span>
-                <span className="text-sm font-semibold text-white group-hover:text-[var(--color-sky)] transition-all duration-300">
-                  +1 (323) 639-5853
-                </span>
-              </div>
-            </a>
-
-            {/* Email */}
-            <a
-              href="mailto:info@alburhanquranacademy.org"
-              className="flex items-center gap-3 p-3 rounded-lg hover:bg-[var(--color-accent)]/10 transition-all duration-300 group active:scale-95 hover:shadow-md"
-            >
-              <div className="p-2 rounded-lg bg-[var(--color-accent)]/20 group-hover:bg-[var(--color-accent)]/30 transition-all duration-300 group-hover:shadow-md">
-                <svg className="w-5 h-5 stroke-[var(--color-accent)] fill-none transition-transform duration-300 group-hover:scale-110" viewBox="0 0 24 24" strokeWidth="2">
-                  <rect x="2" y="4" width="20" height="16" rx="2" />
-                  <path d="m2 7 10 7 10-7" />
-                </svg>
-              </div>
-              <div className="flex flex-col min-w-0">
-                <span className="text-xs text-[var(--color-gray-muted)] uppercase tracking-wide transition-colors duration-300">Email</span>
-                <span className="text-sm font-semibold text-white group-hover:text-[var(--color-sky)] transition-all duration-300 truncate">
-                  info@alburhanquranacademy.org
-                </span>
-              </div>
-            </a>
-        </div>
-      </div>
     </div>
   );
 }
