@@ -55,10 +55,16 @@ export default function ContactSection() {
     setError(null);
 
     try {
-      const res = await fetch("/api/contacts", {
+      const res = await fetch("/api/trial", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          course: form.course,
+          message: form.message,
+        }),
       });
 
       if (!res.ok) {
