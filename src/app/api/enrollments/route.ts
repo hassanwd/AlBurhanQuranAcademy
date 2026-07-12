@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     await connectDB();
     const payload = {
       ...validation.data,
-      status: "pending",
+      status: "pending" as const,
     };
     const enrollment = await Enrollment.create(payload);
     const plainEnrollment = enrollment.toObject();
