@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
+import { buildEnrollmentPayload } from "@/lib/enrollment";
+
 const COURSES = [
   { title: "Quranic Qaidah", image: "/Quranic Qaidah.png" },
   { title: "Quran Gateway", image: "/Quran Gateway.png" },
@@ -34,6 +36,7 @@ interface Props {
 }
 
 interface FormData {
+  [key: string]: string | undefined;
   name: string;
   email: string;
   phone: string;
@@ -90,7 +93,7 @@ export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
     setStep(2);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const e: Partial<Record<keyof FormData, string>> = {};
     if (!form.name.trim()) e.name = "Full name is required";
     if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) e.email = "Valid email is required";
@@ -102,7 +105,23 @@ export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
     if (FREQUENCY_COURSES.includes(course) && !form.frequency) e.frequency = "Please select class frequency";
     if (DAY_COURSES.includes(course) && !form.daySlot) e.daySlot = "Please select preferred days";
     setErrors(e);
-    if (Object.keys(e).length === 0) setSubmitted(true);
+
+    if (Object.keys(e).length > 0) return;
+
+    const payload = buildEnrollmentPayload(form, course);
+    const res = await fetch("/api/enrollments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      setErrors({ email: data.message || "Unable to submit enrollment" });
+      return;
+    }
+
+    setSubmitted(true);
   };
 
   const inputCls = (key: keyof FormData) =>

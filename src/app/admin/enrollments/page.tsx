@@ -1,12 +1,6 @@
-const enrollments = [
-  { name: "Aisha Malik",     email: "aisha@email.com",   phone: "+1 330 111 2233", course: "Quran Memorizing",          date: "27 May 2025", status: "approved" },
-  { name: "Omar Farooq",     email: "omar@email.com",    phone: "+44 203 222 3344", course: "Tajweed Course",            date: "26 May 2025", status: "pending"  },
-  { name: "Fatima Zahra",    email: "fatima@email.com",  phone: "+1 330 333 4455", course: "Quranic Qaidah",            date: "25 May 2025", status: "approved" },
-  { name: "Yusuf Ahmed",     email: "yusuf@email.com",   phone: "+44 203 444 5566", course: "Women Quranic Course",     date: "24 May 2025", status: "rejected" },
-  { name: "Zainab Hassan",   email: "zainab@email.com",  phone: "+1 330 555 6677", course: "Quran Gateway",             date: "23 May 2025", status: "pending"  },
-  { name: "Ibrahim Khan",    email: "ibrahim@email.com", phone: "+44 203 666 7788", course: "Translation of Holy Quran",date: "22 May 2025", status: "approved" },
-  { name: "Maryam Siddiqui", email: "maryam@email.com",  phone: "+1 330 777 8899", course: "Quranic Qaidah",           date: "21 May 2025", status: "pending"  },
-];
+"use client";
+
+import { useEffect, useState } from "react";
 
 const statusColors: Record<string, string> = {
   pending:  "text-yellow-400 bg-yellow-400/10 border border-yellow-400/30",
@@ -14,7 +8,47 @@ const statusColors: Record<string, string> = {
   rejected: "text-red-400 bg-red-400/10 border border-red-400/30",
 };
 
+type EnrollmentRecord = {
+  _id: string;
+  name: string;
+  email: string;
+  phone: string;
+  course: string;
+  country?: string;
+  gender?: string;
+  age?: string;
+  guardianName?: string;
+  guardianPhone?: string;
+  convenientTimeFrom?: string;
+  convenientTimeTo?: string;
+  frequency?: string;
+  daySlot?: string;
+  message?: string;
+  status: string;
+  createdAt: string;
+};
+
 export default function AdminEnrollmentsPage() {
+  const [enrollments, setEnrollments] = useState<EnrollmentRecord[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadEnrollments() {
+      try {
+        const res = await fetch("/api/enrollments");
+        if (!res.ok) throw new Error("Unable to load enrollments");
+        const data = await res.json();
+        setEnrollments(data.enrollments || []);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadEnrollments();
+  }, []);
+
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
@@ -36,44 +70,50 @@ export default function AdminEnrollmentsPage() {
       </div>
 
       <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl overflow-hidden">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="border-b border-[var(--color-border)]">
-              <th className="text-left px-5 py-3.5 text-gray-400 font-semibold text-xs uppercase tracking-wider">Student</th>
-              <th className="text-left px-5 py-3.5 text-gray-400 font-semibold text-xs uppercase tracking-wider">Course</th>
-              <th className="text-left px-5 py-3.5 text-gray-400 font-semibold text-xs uppercase tracking-wider">Phone</th>
-              <th className="text-left px-5 py-3.5 text-gray-400 font-semibold text-xs uppercase tracking-wider">Date</th>
-              <th className="text-left px-5 py-3.5 text-gray-400 font-semibold text-xs uppercase tracking-wider">Status</th>
-              <th className="px-5 py-3.5" />
-            </tr>
-          </thead>
-          <tbody>
-            {enrollments.map((e, i) => (
-              <tr key={i} className="border-b border-[var(--color-border)] last:border-0 hover:bg-white/[0.02] transition-colors">
-                <td className="px-5 py-3.5">
-                  <p className="text-white font-medium">{e.name}</p>
-                  <p className="text-gray-500 text-xs mt-0.5">{e.email}</p>
-                </td>
-                <td className="px-5 py-3.5 text-gray-400">{e.course}</td>
-                <td className="px-5 py-3.5 text-gray-400 text-xs">{e.phone}</td>
-                <td className="px-5 py-3.5 text-gray-500 text-xs">{e.date}</td>
-                <td className="px-5 py-3.5">
-                  <span className={`px-2.5 py-1 rounded-full text-xs font-semibold capitalize ${statusColors[e.status]}`}>{e.status}</span>
-                </td>
-                <td className="px-5 py-3.5">
-                  <div className="flex items-center justify-end gap-2">
-                    <button className="text-gray-400 hover:text-green-400 transition-colors p-1" title="Approve">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                    </button>
-                    <button className="text-gray-400 hover:text-red-400 transition-colors p-1" title="Reject">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                    </button>
-                  </div>
-                </td>
+        {loading ? (
+          <p className="px-5 py-6 text-gray-400">Loading enrollments...</p>
+        ) : (
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-[var(--color-border)]">
+                <th className="text-left px-5 py-3.5 text-gray-400 font-semibold text-xs uppercase tracking-wider">Student</th>
+                <th className="text-left px-5 py-3.5 text-gray-400 font-semibold text-xs uppercase tracking-wider">Course</th>
+                <th className="text-left px-5 py-3.5 text-gray-400 font-semibold text-xs uppercase tracking-wider">Details</th>
+                <th className="text-left px-5 py-3.5 text-gray-400 font-semibold text-xs uppercase tracking-wider">Date</th>
+                <th className="text-left px-5 py-3.5 text-gray-400 font-semibold text-xs uppercase tracking-wider">Status</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {enrollments.map((e) => (
+                <tr key={e._id} className="border-b border-[var(--color-border)] last:border-0 hover:bg-white/[0.02] transition-colors">
+                  <td className="px-5 py-3.5">
+                    <p className="text-white font-medium">{e.name}</p>
+                    <p className="text-gray-500 text-xs mt-0.5">{e.email}</p>
+                  </td>
+                  <td className="px-5 py-3.5 text-gray-400">{e.course}</td>
+                  <td className="px-5 py-3.5 text-gray-400 text-xs">
+                    <div className="space-y-1">
+                      <p>Phone: {e.phone}</p>
+                      <p>Country: {e.country || "-"}</p>
+                      <p>Gender: {e.gender || "-"}</p>
+                      {e.age && <p>Age: {e.age}</p>}
+                      {e.guardianName && <p>Guardian: {e.guardianName}</p>}
+                      {e.guardianPhone && <p>Guardian Phone: {e.guardianPhone}</p>}
+                      {(e.convenientTimeFrom || e.convenientTimeTo) && <p>Time: {e.convenientTimeFrom || "-"} to {e.convenientTimeTo || "-"}</p>}
+                      {e.frequency && <p>Frequency: {e.frequency}</p>}
+                      {e.daySlot && <p>Days: {e.daySlot}</p>}
+                      {e.message && <p>Message: {e.message}</p>}
+                    </div>
+                  </td>
+                  <td className="px-5 py-3.5 text-gray-500 text-xs">{new Date(e.createdAt).toLocaleDateString()}</td>
+                  <td className="px-5 py-3.5">
+                    <span className={`px-2.5 py-1 rounded-full text-xs font-semibold capitalize ${statusColors[e.status] || statusColors.pending}`}>{e.status}</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );

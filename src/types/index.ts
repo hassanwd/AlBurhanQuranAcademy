@@ -37,6 +37,15 @@ export interface IEnrollment {
   email: string;
   phone: string;
   course: string;
+  country?: string;
+  gender?: string;
+  age?: string;
+  guardianName?: string;
+  guardianPhone?: string;
+  convenientTimeFrom?: string;
+  convenientTimeTo?: string;
+  frequency?: string;
+  daySlot?: string;
   status: "pending" | "approved" | "rejected";
   message?: string;
   createdAt: string;

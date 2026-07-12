@@ -1,4 +1,5 @@
 import { connectDB } from "@/lib/mongodb";
+import { Enrollment } from "@/models/Enrollment";
 import { Trial } from "@/models/Trial";
 
 const stats = [
@@ -19,8 +20,13 @@ async function getRecentTrials() {
   return Trial.find({}).sort({ createdAt: -1 }).limit(5).lean();
 }
 
+async function getRecentEnrollments() {
+  await connectDB();
+  return Enrollment.find({}).sort({ createdAt: -1 }).limit(5).lean();
+}
+
 export default async function DashboardPage() {
-  const recentTrials = await getRecentTrials();
+  const [recentTrials, recentEnrollments] = await Promise.all([getRecentTrials(), getRecentEnrollments()]);
   const pendingCount = recentTrials.filter((trial: any) => trial.status === "pending").length;
 
   stats[3] = { ...stats[3], value: String(recentTrials.length), change: `${pendingCount} pending` };
@@ -47,6 +53,46 @@ export default async function DashboardPage() {
             </div>
           </div>
         ))}
+      </div>
+
+      {/* Recent Enrollments */}
+      <div className="bg-[var(--color-surface)] border border-[var(--color-border)] rounded-2xl overflow-hidden">
+        <div className="px-6 py-4 border-b border-[var(--color-border)] flex items-center justify-between">
+          <h3 className="text-white font-bold text-sm uppercase tracking-widest">Recent Enrollments</h3>
+          <a href="/admin/enrollments" className="text-[var(--color-accent)] text-xs font-semibold hover:underline">View All</a>
+        </div>
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-[var(--color-border)]">
+              <th className="text-left px-6 py-3 text-gray-400 font-semibold text-xs uppercase tracking-wider">Student</th>
+              <th className="text-left px-6 py-3 text-gray-400 font-semibold text-xs uppercase tracking-wider">Course</th>
+              <th className="text-left px-6 py-3 text-gray-400 font-semibold text-xs uppercase tracking-wider">Date</th>
+              <th className="text-left px-6 py-3 text-gray-400 font-semibold text-xs uppercase tracking-wider">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {recentEnrollments.map((enrollment: any) => (
+              <tr key={enrollment._id} className="border-b border-[var(--color-border)] last:border-0 hover:bg-white/[0.02] transition-colors">
+                <td className="px-6 py-3.5 text-white font-medium">
+                  <div className="flex flex-col">
+                    <span>{enrollment.name}</span>
+                    <span className="text-xs text-gray-500">{enrollment.email || "—"}</span>
+                  </div>
+                </td>
+                <td className="px-6 py-3.5 text-gray-400">
+                  <div className="flex flex-col gap-0.5">
+                    <span>{enrollment.course}</span>
+                    <span className="text-xs text-gray-500">{enrollment.country || "—"}</span>
+                  </div>
+                </td>
+                <td className="px-6 py-3.5 text-gray-500 text-xs">{new Date(enrollment.createdAt).toLocaleDateString()}</td>
+                <td className="px-6 py-3.5">
+                  <span className={`px-2.5 py-1 rounded-full text-xs font-semibold capitalize ${statusColors[enrollment.status] || statusColors.pending}`}>{enrollment.status}</span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {/* Recent Trial Requests */}
