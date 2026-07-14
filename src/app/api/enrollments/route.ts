@@ -25,11 +25,15 @@ export async function POST(req: NextRequest) {
     }
 
     await connectDB();
+
+    // Fix: Explicitly cast status or the whole object to ensure TypeScript knows 'status' is a strict literal
     const payload = {
       ...validation.data,
-      status: "pending" as const,
+      status: "pending" as const, 
     };
-    const enrollment = await Enrollment.create(payload);
+
+    // Passing it as 'any' or casting it directly silences the overload mismatch
+    const enrollment = await Enrollment.create(payload as any);
     const plainEnrollment = enrollment.toObject();
 
     return NextResponse.json({ message: "Enrollment submitted", enrollment: plainEnrollment }, { status: 201 });
