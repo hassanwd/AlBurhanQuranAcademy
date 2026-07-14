@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-import { buildEnrollmentPayload } from "@/lib/enrollment";
+import { buildEnrollmentPayload, getEnrollmentFieldErrors } from "@/lib/enrollment";
 
 const COURSES = [
   { title: "Quranic Qaidah", image: "/Quranic Qaidah.png" },
@@ -66,6 +66,8 @@ export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
   const [form, setForm] = useState<FormData>({ ...EMPTY });
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<FieldKey, string>>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState("");
 
   useEffect(() => {
     if (open) {
@@ -74,6 +76,8 @@ export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
       setStep(1);
       setSubmitted(false);
       setErrors({});
+      setIsSubmitting(false);
+      setFormError("");
     }
   }, [open, selectedCourse]);
 
@@ -94,34 +98,40 @@ export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
   };
 
   const handleSubmit = async () => {
-    const e: Partial<Record<keyof FormData, string>> = {};
-    if (!form.name.trim()) e.name = "Full name is required";
-    if (!form.email.trim() || !/\S+@\S+\.\S+/.test(form.email)) e.email = "Valid email is required";
-    if (!form.phone.trim()) e.phone = "Phone number is required";
-    if (!form.country.trim()) e.country = "Country is required";
-    if (!form.gender) e.gender = "Please select gender";
-    if (!form.convenientTimeFrom) e.convenientTimeFrom = "Start time is required";
-    if (!form.convenientTimeTo) e.convenientTimeTo = "End time is required";
+    setFormError("");
+
+    // Same schema (and same minimum-length rules) the API route validates against, so a
+    // value that passes here is guaranteed to pass on the server too — no more short values
+    // like phone="1" slipping through the client only to bounce back from the server with
+    // an error the UI didn't know how to attach to the right field.
+    const e: Partial<Record<keyof FormData, string>> = getEnrollmentFieldErrors({ ...form, course });
     if (FREQUENCY_COURSES.includes(course) && !form.frequency) e.frequency = "Please select class frequency";
     if (DAY_COURSES.includes(course) && !form.daySlot) e.daySlot = "Please select preferred days";
     setErrors(e);
 
     if (Object.keys(e).length > 0) return;
 
-    const payload = buildEnrollmentPayload(form, course);
-    const res = await fetch("/api/enrollments", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    setIsSubmitting(true);
+    try {
+      const payload = buildEnrollmentPayload(form, course);
+      const res = await fetch("/api/enrollments", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-    if (!res.ok) {
-      const data = await res.json().catch(() => ({}));
-      setErrors({ email: data.message || "Unable to submit enrollment" });
-      return;
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setFormError(data.message || "Unable to submit enrollment. Please try again.");
+        return;
+      }
+
+      setSubmitted(true);
+    } catch {
+      setFormError("Network error — please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
-
-    setSubmitted(true);
   };
 
   const inputCls = (key: keyof FormData) =>
@@ -413,12 +423,17 @@ export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
 
         {/* ── Footer ── */}
         {!submitted && (
-          <div className="px-6 py-4 border-t border-[var(--color-border)] shrink-0 flex items-center justify-between gap-3">
+          <div className="px-6 py-4 border-t border-[var(--color-border)] shrink-0 flex flex-col gap-3">
+            {formError && (
+              <p className="text-red-400 text-xs bg-red-500/10 border border-red-500/30 rounded-lg px-3 py-2">{formError}</p>
+            )}
+            <div className="flex items-center justify-between gap-3">
             {step === 2 ? (
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[var(--color-border)] text-gray-400 hover:text-white text-sm font-medium transition-colors"
+                disabled={isSubmitting}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-[var(--color-border)] text-gray-400 hover:text-white text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
@@ -442,14 +457,28 @@ export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
               <button
                 type="button"
                 onClick={handleSubmit}
-                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white text-sm font-bold transition-colors shadow-[0_4px_20px_rgba(250,132,30,0.3)]"
+                disabled={isSubmitting}
+                className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-white text-sm font-bold transition-colors shadow-[0_4px_20px_rgba(250,132,30,0.3)] disabled:opacity-70 disabled:cursor-not-allowed"
               >
-                Submit Enrollment
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
+                {isSubmitting ? (
+                  <>
+                    <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                    </svg>
+                    Submitting...
+                  </>
+                ) : (
+                  <>
+                    Submit Enrollment
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </>
+                )}
               </button>
             )}
+            </div>
           </div>
         )}
 

@@ -4,6 +4,11 @@ import { connectDB } from "@/lib/mongodb";
 import { validateEnrollmentInput } from "@/lib/enrollment";
 import { Enrollment } from "@/models/Enrollment";
 
+// GET route handlers are cached by Next.js by default unless they opt out. Without this,
+// the admin enrollments list could keep serving a stale, pre-cached response instead of
+// hitting MongoDB on every request.
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     await connectDB();

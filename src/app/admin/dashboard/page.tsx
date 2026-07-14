@@ -2,12 +2,12 @@ import { connectDB } from "@/lib/mongodb";
 import { Enrollment } from "@/models/Enrollment";
 import { Trial } from "@/models/Trial";
 
-const stats = [
-  { label: "Total Enrollments", value: "124", change: "+12 this week",  color: "var(--color-accent)",      icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
-  { label: "Total Blogs",       value: "38",  change: "+3 this month",  color: "var(--color-sky)",         icon: "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 12h6" },
-  { label: "Total Courses",     value: "6",   change: "All active",     color: "var(--color-green-light)", icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" },
-  { label: "Trial Requests",    value: "0",   change: "Pending review", color: "#f59e0b",                  icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
-];
+// Force this page to be rendered fresh on every request. Without this, Next.js has no
+// signal that the page depends on live data (no cookies()/headers()/searchParams are read
+// directly in this component), so it can statically prerender it once at build time and
+// keep serving that same snapshot to every visitor — which is why new enrollments never
+// showed up here and the KPI stayed frozen.
+export const dynamic = "force-dynamic";
 
 const statusColors: Record<string, string> = {
   pending:  "text-yellow-400 bg-yellow-400/10 border border-yellow-400/30",
@@ -25,11 +25,38 @@ async function getRecentEnrollments() {
   return Enrollment.find({}).sort({ createdAt: -1 }).limit(5).lean();
 }
 
+async function getEnrollmentStats() {
+  await connectDB();
+
+  const startOfWeek = new Date();
+  startOfWeek.setHours(0, 0, 0, 0);
+  startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay());
+
+  const [total, thisWeek] = await Promise.all([
+    Enrollment.countDocuments({}),
+    Enrollment.countDocuments({ createdAt: { $gte: startOfWeek } }),
+  ]);
+
+  return { total, thisWeek };
+}
+
 export default async function DashboardPage() {
-  const [recentTrials, recentEnrollments] = await Promise.all([getRecentTrials(), getRecentEnrollments()]);
+  const [recentTrials, recentEnrollments, enrollmentStats] = await Promise.all([
+    getRecentTrials(),
+    getRecentEnrollments(),
+    getEnrollmentStats(),
+  ]);
   const pendingCount = recentTrials.filter((trial: any) => trial.status === "pending").length;
 
-  stats[3] = { ...stats[3], value: String(recentTrials.length), change: `${pendingCount} pending` };
+  // Built fresh per-request (rather than mutating a shared module-level array) so
+  // concurrent requests on the same warm server instance can never see each other's values.
+  const stats = [
+    { label: "Total Enrollments", value: String(enrollmentStats.total), change: `+${enrollmentStats.thisWeek} this week`, color: "var(--color-accent)",      icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
+    { label: "Total Blogs",       value: "38",  change: "+3 this month",  color: "var(--color-sky)",         icon: "M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 12h6" },
+    { label: "Total Courses",     value: "6",   change: "All active",     color: "var(--color-green-light)", icon: "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" },
+    { label: "Trial Requests",    value: String(recentTrials.length), change: `${pendingCount} pending`, color: "#f59e0b", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
+  ];
+
   return (
     <div className="flex flex-col gap-8">
       <div>

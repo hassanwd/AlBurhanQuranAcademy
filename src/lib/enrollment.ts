@@ -69,3 +69,25 @@ export function validateEnrollmentInput(input: Record<string, unknown>) {
 
   return { ok: true as const, data: result.data };
 }
+
+// Shared by both the client form and the API route so the two never disagree about what's
+// valid. Previously the client only checked "is this field non-empty" while the server (via
+// enrollmentSchema) also enforced minimum lengths (e.g. phone >= 5 chars, country >= 2 chars).
+// A short value like phone="1" would pass the client check, get rejected by the server, and
+// the client had no way to know *which* field the server's single error message belonged to —
+// so it always got shown under the Email field regardless of the real cause. Returning a
+// per-field map (keyed off zod's issue.path, same as the server uses) lets the client show
+// every error next to its own field, using the exact same rules the server will enforce.
+export function getEnrollmentFieldErrors(input: Record<string, unknown>): Partial<Record<keyof EnrollmentInput, string>> {
+  const sanitized = sanitizeEnrollmentInput(input);
+  const result = enrollmentSchema.safeParse(sanitized);
+
+  if (result.success) return {};
+
+  const fieldErrors: Partial<Record<keyof EnrollmentInput, string>> = {};
+  for (const issue of result.error.issues) {
+    const key = issue.path[0] as keyof EnrollmentInput | undefined;
+    if (key && !fieldErrors[key]) fieldErrors[key] = issue.message;
+  }
+  return fieldErrors;
+}
