@@ -204,10 +204,6 @@ function CourseModal({ course, onClose, onSaved }: { course?: CourseRow; onClose
       setError("Only JPG, PNG, WEBP or GIF images are allowed.");
       return;
     }
-    if (file.size > 2 * 1024 * 1024) {
-      setError("Image must be 2MB or smaller.");
-      return;
-    }
 
     setImageFile(file);
     const reader = new FileReader();
@@ -297,7 +293,7 @@ function CourseModal({ course, onClose, onSaved }: { course?: CourseRow; onClose
               >
                 {preview ? "Change Image" : "Upload Image"}
               </button>
-              <p className="text-gray-500 text-xs">JPG, PNG, WEBP or GIF. Max 2MB.</p>
+              <p className="text-gray-500 text-xs">JPG, PNG, WEBP or GIF.</p>
             </div>
             <input
               ref={fileInputRef}

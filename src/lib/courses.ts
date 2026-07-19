@@ -1,7 +1,6 @@
 import { getSession } from "@/lib/auth";
 import { Course } from "@/models/Course";
 
-export const MAX_IMAGE_SIZE = 2 * 1024 * 1024; // 2MB
 export const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 
 export async function requireAdmin() {
@@ -52,8 +51,6 @@ export async function parseCourseForm(formData: FormData): Promise<CourseFormRes
   if (file instanceof File && file.size > 0) {
     if (!ALLOWED_IMAGE_TYPES.includes(file.type))
       return { ok: false, message: "Only JPG, PNG, WEBP or GIF images are allowed" };
-    if (file.size > MAX_IMAGE_SIZE)
-      return { ok: false, message: "Image must be 2MB or smaller" };
     const buffer = Buffer.from(await file.arrayBuffer());
     imageDataUri = `data:${file.type};base64,${buffer.toString("base64")}`;
   }

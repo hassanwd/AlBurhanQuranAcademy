@@ -5,7 +5,6 @@ import { User } from "@/models/User";
 
 export const dynamic = "force-dynamic";
 
-const MAX_SIZE = 2 * 1024 * 1024; // 2MB
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 
 export async function POST(req: NextRequest) {
@@ -22,9 +21,6 @@ export async function POST(req: NextRequest) {
 
     if (!ALLOWED_TYPES.includes(file.type))
       return NextResponse.json({ message: "Only JPG, PNG, WEBP or GIF images are allowed" }, { status: 400 });
-
-    if (file.size > MAX_SIZE)
-      return NextResponse.json({ message: "Image must be 2MB or smaller" }, { status: 400 });
 
     const buffer = Buffer.from(await file.arrayBuffer());
     const dataUri = `data:${file.type};base64,${buffer.toString("base64")}`;

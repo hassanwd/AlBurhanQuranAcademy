@@ -45,10 +45,6 @@ export default function AdminSettingsPage() {
       setPhotoMsg({ type: "error", text: "Only JPG, PNG, WEBP or GIF images are allowed." });
       return;
     }
-    if (file.size > 2 * 1024 * 1024) {
-      setPhotoMsg({ type: "error", text: "Image must be 2MB or smaller." });
-      return;
-    }
 
     setUploading(true);
     try {
@@ -142,7 +138,7 @@ export default function AdminSettingsPage() {
             >
               {uploading ? "Uploading..." : "Change Photo"}
             </button>
-            <p className="text-gray-500 text-xs">JPG, PNG, WEBP or GIF. Max 2MB.</p>
+            <p className="text-gray-500 text-xs">JPG, PNG, WEBP or GIF.</p>
             <input
               ref={fileInputRef}
               type="file"
