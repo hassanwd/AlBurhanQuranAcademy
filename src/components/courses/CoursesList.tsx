@@ -1,55 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import EnrollModal from "./EnrollModal";
-
-const courses = [
-  {
-    image: "/Quranic Qaidah.png",
-    title: "Quranic Qaidah",
-    slug: "quranic-qaidah",
-    description:
-      "The Quranic Qaida course is designed for beginners who want to learn how to read the Quran correctly from the very basics. In this course, students are taught Arabic letters, pronunciation, and essential Tajweed rules step by step, helping them build a strong foundation for accurate Quran recitation.",
-  },
-  {
-    image: "/Quran Gateway.png",
-    title: "Quran Gateway",
-    slug: "quran-gateway",
-    description:
-      "The Quran Gateway course is designed to help students move beyond the basics and develop a deeper connection with the Quran. In this course, students improve their recitation, strengthen their Tajweed, and begin to understand the meanings of the Quran, making their learning more meaningful and impactful.",
-  },
-  {
-    image: "/Quran memorizing Course.png",
-    title: "Quran Memorizing",
-    slug: "quran-memorizing",
-    description:
-      "The Quran Memorizing course is designed for students who wish to memorize the Holy Quran with proper guidance and discipline. Our teachers support students with structured lessons, regular revision, and effective memorization techniques to ensure strong retention and accuracy.",
-  },
-  {
-    image: "/Translation of the Holy Quran.png",
-    title: "Translation of The Holy Quran",
-    slug: "translation-holy-quran",
-    description:
-      "The Translation of the Holy Quran course is designed to help students understand the meanings and message of the Quran in a clear and simple way. This course enables learners to connect deeply with the Quran by exploring its teachings, guidance, and practical application in daily life.",
-  },
-  {
-    image: "/Woman Quranic Course.png",
-    title: "Women Quranic Course",
-    slug: "women-quranic-course",
-    description:
-      "The Women Quranic Course is specially designed for sisters who want to learn the Holy Quran in a comfortable and supportive environment. Our female teachers provide step-by-step guidance in Quran recitation, Tajweed, and basic Islamic teachings, ensuring a respectful and easy learning experience from home.",
-  },
-  {
-    image: "/Tajweed Course.png",
-    title: "Tajweed Course",
-    slug: "tajweed-course",
-    description:
-      "The Tajweed Course is designed to help students master the correct pronunciation and recitation of the Holy Quran. In this course, learners are taught the detailed rules of Tajweed in a simple and practical way, enabling them to recite the Quran with accuracy, fluency, and beauty.",
-  },
-];
+import { useCourses } from "@/hooks/useCourses";
 
 export default function CoursesList() {
+  const { courses } = useCourses();
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState("");
   const [highlightedSlug, setHighlightedSlug] = useState("");
@@ -90,13 +46,23 @@ export default function CoursesList() {
                       : "border-[var(--color-sky)]/20 hover:border-orange-500/60"
                   }`}
                 >
-                  <div className="relative h-52 w-full overflow-hidden rounded-t-2xl">
-                    <Image
-                      src={image}
-                      alt={title}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
+                  <div className="relative h-52 w-full overflow-hidden rounded-t-2xl bg-[var(--color-black-soft)]">
+                    {image ? (
+                      // Plain <img>: course images uploaded from the admin panel are
+                      // data URIs, which next/image does not support.
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={image}
+                        alt={title}
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <svg className="w-12 h-12 text-[var(--color-accent)]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                        </svg>
+                      </div>
+                    )}
                     <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-surface)] to-transparent" />
 
                     {/* Highlighted badge */}

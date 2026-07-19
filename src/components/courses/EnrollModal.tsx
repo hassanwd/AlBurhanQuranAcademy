@@ -1,18 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 
 import { buildEnrollmentPayload, getEnrollmentFieldErrors } from "@/lib/enrollment";
-
-const COURSES = [
-  { title: "Quranic Qaidah", image: "/Quranic Qaidah.png" },
-  { title: "Quran Gateway", image: "/Quran Gateway.png" },
-  { title: "Quran Memorizing", image: "/Quran memorizing Course.png" },
-  { title: "Translation of The Holy Quran", image: "/Translation of the Holy Quran.png" },
-  { title: "Women Quranic Course", image: "/Woman Quranic Course.png" },
-  { title: "Tajweed Course", image: "/Tajweed Course.png" },
-];
+import { useCourses } from "@/hooks/useCourses";
 
 const FREQUENCY_COURSES = ["Quranic Qaidah", "Quran Gateway", "Quran Memorizing", "Women Quranic Course"];
 const DAY_COURSES = ["Translation of The Holy Quran", "Tajweed Course"];
@@ -61,6 +52,7 @@ const EMPTY: FormData = {
 type FieldKey = keyof FormData | "course";
 
 export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
+  const { courses: availableCourses } = useCourses();
   const [step, setStep] = useState(1);
   const [course, setCourse] = useState(selectedCourse);
   const [form, setForm] = useState<FormData>({ ...EMPTY });
@@ -215,7 +207,7 @@ export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
             <div className="flex flex-col gap-4">
               <p className="text-gray-400 text-sm">Choose the course you&apos;d like to enroll in. You can change this on the next step.</p>
               <div className="grid grid-cols-3 gap-3">
-                {COURSES.map(({ title, image }) => {
+                {availableCourses.map(({ title, image }) => {
                   const active = course === title;
                   return (
                     <button
@@ -226,8 +218,19 @@ export default function EnrollModal({ open, selectedCourse, onClose }: Props) {
                         active ? "border-[var(--color-accent)] shadow-[0_0_20px_rgba(250,132,30,0.25)]" : "border-[var(--color-border)] hover:border-[var(--color-accent)]/50"
                       }`}
                     >
-                      <div className="relative h-32 w-full overflow-hidden">
-                        <Image src={image} alt={title} fill className={`object-cover transition-transform duration-500 ${active ? "scale-105" : "group-hover:scale-105"}`} />
+                      <div className="relative h-32 w-full overflow-hidden bg-[var(--color-surface)]">
+                        {image ? (
+                          // Plain <img>: admin-uploaded course images are data URIs,
+                          // which next/image does not support.
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={image} alt={title} className={`absolute inset-0 w-full h-full object-cover transition-transform duration-500 ${active ? "scale-105" : "group-hover:scale-105"}`} />
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <svg className="w-8 h-8 text-[var(--color-accent)]/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                            </svg>
+                          </div>
+                        )}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                       </div>
                       <div className={`px-3 py-2.5 transition-colors duration-200 ${active ? "bg-[var(--color-accent)]/10" : "bg-[var(--color-surface-raised)]"}`}>

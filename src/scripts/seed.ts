@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import { DEFAULT_COURSES } from "../lib/defaultCourses";
 
 const MONGODB_URI = process.env.MONGODB_URI || "";
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "";
@@ -21,6 +22,18 @@ const UserSchema = new mongoose.Schema(
     email:    { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
     role:     { type: String, enum: ["admin", "superadmin"], default: "admin" },
+    image:    { type: String, default: "" },
+  },
+  { timestamps: true }
+);
+
+const CourseSchema = new mongoose.Schema(
+  {
+    title:       { type: String, required: true },
+    slug:        { type: String, required: true, unique: true },
+    description: { type: String, required: true },
+    image:       { type: String },
+    status:      { type: String, enum: ["active", "inactive"], default: "active" },
   },
   { timestamps: true }
 );
@@ -30,21 +43,40 @@ async function seed() {
   console.log("✅ Connected to MongoDB");
 
   const User = mongoose.models.User || mongoose.model("User", UserSchema);
+  const Course = mongoose.models.Course || mongoose.model("Course", CourseSchema);
 
+  // Admin user
   const existing = await User.findOne({ email: ADMIN_EMAIL });
   if (existing) {
-    console.log("⚠️  Admin already exists. Skipping.");
-    await mongoose.disconnect();
-    process.exit(0);
+    console.log("⚠️  Admin already exists. Skipping admin seed.");
+  } else {
+    const hashed = await bcrypt.hash(ADMIN_PASSWORD, 10);
+    await User.create({
+      name:     "Admin",
+      email:    ADMIN_EMAIL,
+      password: hashed,
+      role:     "superadmin",
+    });
+    console.log("✅ Admin user created");
   }
 
-  const hashed = await bcrypt.hash(ADMIN_PASSWORD, 10);
-  await User.create({
-    name:     "Admin",
-    email:    ADMIN_EMAIL,
-    password: hashed,
-    role:     "superadmin",
-  });
+  // Default courses (only when the collection is empty, so admin edits are never overwritten)
+  const courseCount = await Course.countDocuments();
+  if (courseCount > 0) {
+    console.log(`⚠️  ${courseCount} course(s) already exist. Skipping course seed.`);
+  } else {
+    await Course.insertMany(
+      DEFAULT_COURSES.map((c) => ({
+        title: c.title,
+        slug: c.slug,
+        description: c.description,
+        image: c.image,
+        status: "active",
+      }))
+    );
+    console.log(`✅ Seeded ${DEFAULT_COURSES.length} default courses`);
+  }
+
   await mongoose.disconnect();
   process.exit(0);
 }

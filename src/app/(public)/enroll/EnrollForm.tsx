@@ -2,15 +2,7 @@
 
 import { useState } from "react";
 import { buildEnrollmentPayload, getEnrollmentFieldErrors } from "@/lib/enrollment";
-
-const COURSE_OPTIONS = [
-  "Quranic Qaidah",
-  "Quran Gateway",
-  "Quran Memorizing",
-  "Translation of The Holy Quran",
-  "Women Quranic Course",
-  "Tajweed Course",
-];
+import { useCourses } from "@/hooks/useCourses";
 
 const EMPTY_FORM = {
   name: "",
@@ -28,6 +20,7 @@ const EMPTY_FORM = {
 };
 
 export default function EnrollForm() {
+  const { courses } = useCourses();
   const [form, setForm] = useState(EMPTY_FORM);
   const [errors, setErrors] = useState<Partial<Record<keyof typeof EMPTY_FORM, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -223,8 +216,8 @@ export default function EnrollForm() {
               className={inputClass("course")}
             >
               <option value="">Select a Course</option>
-              {COURSE_OPTIONS.map((course) => (
-                <option key={course} value={course}>{course}</option>
+              {courses.map(({ title }) => (
+                <option key={title} value={title}>{title}</option>
               ))}
             </select>
             {errors.course && <p className="text-red-400 text-xs mt-1">{errors.course}</p>}

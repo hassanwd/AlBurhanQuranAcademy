@@ -7,6 +7,7 @@ const UserSchema = new Schema(
     email:    { type: String, required: true, unique: true, lowercase: true },
     password: { type: String, required: true },
     role:     { type: String, enum: ["user", "admin", "superadmin"], default: "user" },
+    image:    { type: String, default: "" },
   },
   { timestamps: true }
 );
